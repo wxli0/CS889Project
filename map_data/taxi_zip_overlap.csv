@@ -1,0 +1,1069 @@
+,taxi_zone,zip_code
+0,Jamaica Bay,11693
+1,Allerton/Pelham Gardens,10467
+2,Allerton/Pelham Gardens,10475
+3,Allerton/Pelham Gardens,10469
+4,Alphabet City,10002
+5,Alphabet City,10009
+6,Arden Heights,10314
+7,Arden Heights,10312
+8,Arden Heights,10309
+9,Arrochar/Fort Wadsworth,10304
+10,Arrochar/Fort Wadsworth,10305
+11,Astoria,11102
+12,Astoria,11370
+13,Astoria,11103
+14,Astoria,11106
+15,Astoria,11377
+16,Astoria,11101
+17,Astoria Park,11105
+18,Astoria Park,11102
+19,Auburndale,11365
+20,Auburndale,11361
+21,Auburndale,11358
+22,Auburndale,11364
+23,Baisley Park,11435
+24,Baisley Park,11433
+25,Baisley Park,11434
+26,Baisley Park,11436
+27,Baisley Park,11430
+28,Bath Beach,11209
+29,Bath Beach,11228
+30,Bath Beach,11214
+31,Battery Park,10004
+32,Battery Park,10280
+33,Battery Park City,10013
+34,Battery Park City,10007
+35,Battery Park City,10280
+36,Battery Park City,10048
+37,Battery Park City,10285
+38,Battery Park City,10281
+39,Battery Park City,10282
+40,Bay Ridge,11220
+41,Bay Ridge,11209
+42,Bay Ridge,11228
+43,Bay Terrace/Fort Totten,11357
+44,Bay Terrace/Fort Totten,11359
+45,Bay Terrace/Fort Totten,11360
+46,Bay Terrace/Fort Totten,11358
+47,Bayside,11365
+48,Bayside,11357
+49,Bayside,11360
+50,Bayside,11361
+51,Bayside,11358
+52,Bayside,11364
+53,Bedford,11221
+54,Bedford,11216
+55,Bedford,11213
+56,Bedford,11211
+57,Bedford,11206
+58,Bedford,11205
+59,Bedford,11238
+60,Bedford Park,10467
+61,Bedford Park,10468
+62,Bedford Park,10458
+63,Bellerose,11004
+64,Bellerose,11426
+65,Bellerose,11001
+66,Bellerose,11427
+67,Bellerose,11428
+68,Belmont,10458
+69,Belmont,10457
+70,Belmont,10460
+71,Bensonhurst East,11230
+72,Bensonhurst East,11204
+73,Bensonhurst East,11214
+74,Bensonhurst East,11223
+75,Bensonhurst West,11219
+76,Bensonhurst West,11204
+77,Bensonhurst West,11228
+78,Bensonhurst West,11214
+79,Bensonhurst West,11223
+80,Bloomfield/Emerson Hill,10301
+81,Bloomfield/Emerson Hill,10303
+82,Bloomfield/Emerson Hill,10314
+83,Bloomingdale,10024
+84,Bloomingdale,10026
+85,Bloomingdale,10025
+86,Boerum Hill,11201
+87,Boerum Hill,11217
+88,Boerum Hill,11231
+89,Borough Park,11218
+90,Borough Park,11219
+91,Borough Park,11230
+92,Borough Park,11204
+93,Borough Park,11232
+94,Borough Park,11220
+95,Breezy Point/Fort Tilden/Riis Beach,11694
+96,Breezy Point/Fort Tilden/Riis Beach,11697
+97,Briarwood/Jamaica Hills,11432
+98,Briarwood/Jamaica Hills,11435
+99,Briarwood/Jamaica Hills,11367
+100,Brighton Beach,11223
+101,Brighton Beach,11235
+102,Brighton Beach,11224
+103,Broad Channel,11693
+104,Bronx Park,10467
+105,Bronx Park,10458
+106,Bronx Park,10462
+107,Bronx Park,10460
+108,Bronxdale,10467
+109,Bronxdale,10469
+110,Bronxdale,10462
+111,Brooklyn Heights,11201
+112,Brooklyn Navy Yard,11211
+113,Brooklyn Navy Yard,11251
+114,Brooklyn Navy Yard,11201
+115,Brooklyn Navy Yard,11205
+116,Brownsville,11233
+117,Brownsville,11213
+118,Brownsville,11212
+119,Brownsville,11207
+120,Brownsville,11236
+121,Bushwick North,11221
+122,Bushwick North,11237
+123,Bushwick North,11385
+124,Bushwick North,11206
+125,Bushwick North,11207
+126,Bushwick South,11221
+127,Bushwick South,11233
+128,Bushwick South,11211
+129,Bushwick South,11237
+130,Bushwick South,11385
+131,Bushwick South,11206
+132,Bushwick South,11207
+133,Cambria Heights,11429
+134,Cambria Heights,11412
+135,Cambria Heights,11411
+136,Cambria Heights,11413
+137,Cambria Heights,11422
+138,Canarsie,11207
+139,Canarsie,11203
+140,Canarsie,11239
+141,Canarsie,11236
+142,Canarsie,11234
+143,Carroll Gardens,11217
+144,Carroll Gardens,11231
+145,Carroll Gardens,11215
+146,Central Harlem,10027
+147,Central Harlem,10026
+148,Central Harlem,10035
+149,Central Harlem,10025
+150,Central Harlem,10029
+151,Central Harlem,00083
+152,Central Harlem North,10032
+153,Central Harlem North,10031
+154,Central Harlem North,10039
+155,Central Harlem North,10030
+156,Central Harlem North,10027
+157,Central Harlem North,10037
+158,Central Harlem North,10035
+159,Central Park,10024
+160,Central Park,10026
+161,Central Park,10025
+162,Central Park,10029
+163,Central Park,00083
+164,Central Park,10128
+165,Central Park,10023
+166,Central Park,10028
+167,Central Park,10021
+168,Central Park,10019
+169,Central Park,10022
+170,Central Park,10065
+171,Central Park,10075
+172,Charleston/Tottenville,10314
+173,Charleston/Tottenville,10309
+174,Charleston/Tottenville,10307
+175,Chinatown,10002
+176,Chinatown,10013
+177,Chinatown,10007
+178,Chinatown,10038
+179,Claremont/Bathgate,10458
+180,Claremont/Bathgate,10457
+181,Claremont/Bathgate,10456
+182,Clinton East,10036
+183,Clinton East,10018
+184,Clinton East,10019
+185,Clinton Hill,11216
+186,Clinton Hill,11211
+187,Clinton Hill,11251
+188,Clinton Hill,11205
+189,Clinton Hill,11238
+190,Clinton West,10036
+191,Clinton West,10019
+192,Co-Op City,10466
+193,Co-Op City,10475
+194,Co-Op City,10464
+195,Co-Op City,10469
+196,Cobble Hill,11201
+197,Cobble Hill,11231
+198,College Point,11357
+199,College Point,11356
+200,College Point,11354
+201,Columbia Street,11201
+202,Coney Island,11214
+203,Coney Island,11223
+204,Coney Island,11235
+205,Coney Island,11224
+206,Corona,11373
+207,Corona,11375
+208,Corona,11374
+209,Corona,11368
+210,Corona,11368
+211,Country Club,10465
+212,Country Club,10461
+213,Crotona Park,10457
+214,Crotona Park,10460
+215,Crotona Park,10456
+216,Crotona Park East,10457
+217,Crotona Park East,10460
+218,Crotona Park East,10456
+219,Crotona Park East,10472
+220,Crotona Park East,10459
+221,Crown Heights North,11216
+222,Crown Heights North,11233
+223,Crown Heights North,11213
+224,Crown Heights North,11225
+225,Crown Heights North,11238
+226,Crown Heights South,11216
+227,Crown Heights South,11213
+228,Crown Heights South,11225
+229,Crown Heights South,11238
+230,Crown Heights South,11203
+231,Cypress Hills,11421
+232,Cypress Hills,11416
+233,Cypress Hills,11233
+234,Cypress Hills,11385
+235,Cypress Hills,11208
+236,Cypress Hills,11207
+237,Cypress Hills,11417
+238,Cypress Hills,11414
+239,Douglaston,11426
+240,Douglaston,11363
+241,Douglaston,11361
+242,Douglaston,11362
+243,Douglaston,11364
+244,Douglaston,11005
+245,Downtown Brooklyn/MetroTech,11201
+246,DUMBO/Vinegar Hill,11251
+247,DUMBO/Vinegar Hill,11201
+248,Dyker Heights,11219
+249,Dyker Heights,11220
+250,Dyker Heights,11209
+251,Dyker Heights,11228
+252,East Chelsea,10018
+253,East Chelsea,10001
+254,East Chelsea,10011
+255,East Chelsea,10014
+256,East Concourse/Concourse Village,10457
+257,East Concourse/Concourse Village,10452
+258,East Concourse/Concourse Village,10456
+259,East Concourse/Concourse Village,10451
+260,East Elmhurst,11372
+261,East Elmhurst,11371
+262,East Elmhurst,11369
+263,East Elmhurst,11368
+264,East Flatbush/Farragut,11226
+265,East Flatbush/Farragut,11210
+266,East Flatbush/Farragut,11203
+267,East Flatbush/Farragut,11234
+268,East Flatbush/Remsen Village,11213
+269,East Flatbush/Remsen Village,11212
+270,East Flatbush/Remsen Village,11203
+271,East Flatbush/Remsen Village,11236
+272,East Flatbush/Remsen Village,11234
+273,East Flushing,11365
+274,East Flushing,11358
+275,East Flushing,11355
+276,East Harlem North,10039
+277,East Harlem North,10027
+278,East Harlem North,10037
+279,East Harlem North,10026
+280,East Harlem North,10035
+281,East Harlem North,10029
+282,East Harlem South,10026
+283,East Harlem South,10029
+284,East Harlem South,00083
+285,East Harlem South,10128
+286,East New York,11212
+287,East New York,11208
+288,East New York,11207
+289,East New York,11414
+290,East New York,11239
+291,East New York,11236
+292,East New York/Pennsylvania Avenue,11233
+293,East New York/Pennsylvania Avenue,11212
+294,East New York/Pennsylvania Avenue,11207
+295,East Tremont,10458
+296,East Tremont,10462
+297,East Tremont,10457
+298,East Tremont,10460
+299,East Village,10003
+300,East Village,10002
+301,East Village,10009
+302,East Village,10012
+303,East Williamsburg,11222
+304,East Williamsburg,11211
+305,East Williamsburg,11237
+306,East Williamsburg,11385
+307,East Williamsburg,11206
+308,Eastchester,10466
+309,Eastchester,10475
+310,Eastchester,10464
+311,Eastchester,10469
+312,Elmhurst,11372
+313,Elmhurst,11373
+314,Elmhurst,11374
+315,Elmhurst,11368
+316,Elmhurst,11377
+317,Elmhurst,11378
+318,Elmhurst/Maspeth,11372
+319,Elmhurst/Maspeth,11373
+320,Elmhurst/Maspeth,11377
+321,Elmhurst/Maspeth,11378
+322,Eltingville/Annadale/Prince's Bay,10314
+323,Eltingville/Annadale/Prince's Bay,10312
+324,Eltingville/Annadale/Prince's Bay,10309
+325,Erasmus,11226
+326,Erasmus,11210
+327,Erasmus,11203
+328,Far Rockaway,11691
+329,Far Rockaway,11096
+330,Financial District North,10007
+331,Financial District North,10038
+332,Financial District North,10006
+333,Financial District North,10005
+334,Financial District North,10004
+335,Financial District North,10270
+336,Financial District North,10271
+337,Financial District North,10043
+338,Financial District North,10081
+339,Financial District North,10265
+340,Financial District North,10045
+341,Financial District North,10203
+342,Financial District North,10259
+343,Financial District North,10260
+344,Financial District North,10286
+345,Financial District South,10006
+346,Financial District South,10005
+347,Financial District South,10004
+348,Financial District South,10041
+349,Flatbush/Ditmas Park,11225
+350,Flatbush/Ditmas Park,11218
+351,Flatbush/Ditmas Park,11226
+352,Flatbush/Ditmas Park,11210
+353,Flatbush/Ditmas Park,11230
+354,Flatbush/Ditmas Park,11204
+355,Flatbush/Ditmas Park,11215
+356,Flatbush/Ditmas Park,11203
+357,Flatiron,10001
+358,Flatiron,10011
+359,Flatiron,10010
+360,Flatiron,10014
+361,Flatlands,11210
+362,Flatlands,11203
+363,Flatlands,11236
+364,Flatlands,11234
+365,Flatlands,11229
+366,Flushing,11357
+367,Flushing,11354
+368,Flushing,11368
+369,Flushing,11355
+370,Flushing Meadows-Corona Park,11375
+371,Flushing Meadows-Corona Park,11435
+372,Flushing Meadows-Corona Park,11369
+373,Flushing Meadows-Corona Park,11368
+374,Flushing Meadows-Corona Park,11355
+375,Flushing Meadows-Corona Park,11367
+376,Fordham South,10468
+377,Fordham South,10458
+378,Fordham South,10453
+379,Fordham South,10457
+380,Forest Hills,11375
+381,Forest Hills,11374
+382,Forest Hills,11415
+383,Forest Hills,11368
+384,Forest Hills,11385
+385,Forest Park/Highland Park,11375
+386,Forest Park/Highland Park,11415
+387,Forest Park/Highland Park,11418
+388,Forest Park/Highland Park,11421
+389,Forest Park/Highland Park,11385
+390,Forest Park/Highland Park,11208
+391,Forest Park/Highland Park,11207
+392,Fort Greene,11251
+393,Fort Greene,11201
+394,Fort Greene,11205
+395,Fort Greene,11217
+396,Fort Greene,11238
+397,Fresh Meadows,11365
+398,Fresh Meadows,11427
+399,Fresh Meadows,11366
+400,Fresh Meadows,11423
+401,Fresh Meadows,11432
+402,Fresh Meadows,11364
+403,Freshkills Park,10314
+404,Freshkills Park,10312
+405,Freshkills Park,10309
+406,Garment District,10036
+407,Garment District,10018
+408,Garment District,10001
+409,Garment District,10122
+410,Garment District,10123
+411,Glen Oaks,11004
+412,Glen Oaks,11040
+413,Glen Oaks,11426
+414,Glen Oaks,11001
+415,Glen Oaks,11005
+416,Glendale,11375
+417,Glendale,11374
+418,Glendale,11379
+419,Glendale,11385
+420,Governor's Island/Ellis Island/Liberty Island,10004
+421,Governor's Island/Ellis Island/Liberty Island,10004
+422,Governor's Island/Ellis Island/Liberty Island,10004
+423,Gowanus,11217
+424,Gowanus,11231
+425,Gowanus,11215
+426,Gramercy,10016
+427,Gramercy,10010
+428,Gramercy,10003
+429,Gramercy,10009
+430,Gramercy,10047
+431,Gramercy,10047
+432,Gravesend,11214
+433,Gravesend,11223
+434,Gravesend,11235
+435,Gravesend,11224
+436,Great Kills,10314
+437,Great Kills,10306
+438,Great Kills,10308
+439,Great Kills,10312
+440,Great Kills Park,10306
+441,Great Kills Park,10308
+442,Green-Wood Cemetery,11218
+443,Green-Wood Cemetery,11219
+444,Green-Wood Cemetery,11215
+445,Green-Wood Cemetery,11232
+446,Greenpoint,11222
+447,Greenpoint,11211
+448,Greenwich Village North,10011
+449,Greenwich Village North,10014
+450,Greenwich Village North,10003
+451,Greenwich Village North,10012
+452,Greenwich Village South,10011
+453,Greenwich Village South,10014
+454,Greenwich Village South,10003
+455,Greenwich Village South,10002
+456,Greenwich Village South,10012
+457,Grymes Hill/Clifton,10301
+458,Grymes Hill/Clifton,10304
+459,Grymes Hill/Clifton,10305
+460,Hamilton Heights,10032
+461,Hamilton Heights,10031
+462,Hamilton Heights,10039
+463,Hamilton Heights,10030
+464,Hammels/Arverne,11691
+465,Hammels/Arverne,11692
+466,Hammels/Arverne,11693
+467,Heartland Village/Todt Hill,10301
+468,Heartland Village/Todt Hill,10304
+469,Heartland Village/Todt Hill,10314
+470,Heartland Village/Todt Hill,10306
+471,Heartland Village/Todt Hill,10308
+472,Heartland Village/Todt Hill,10312
+473,Highbridge,10452
+474,Highbridge,10451
+475,Highbridge Park,10034
+476,Highbridge Park,10033
+477,Highbridge Park,10040
+478,Highbridge Park,10032
+479,Highbridge Park,10039
+480,Hillcrest/Pomonok,11365
+481,Hillcrest/Pomonok,11366
+482,Hillcrest/Pomonok,11432
+483,Hillcrest/Pomonok,11367
+484,Hollis,11427
+485,Hollis,11423
+486,Hollis,11428
+487,Hollis,11429
+488,Hollis,11412
+489,Homecrest,11230
+490,Homecrest,11204
+491,Homecrest,11229
+492,Homecrest,11223
+493,Homecrest,11235
+494,Howard Beach,11208
+495,Howard Beach,11420
+496,Howard Beach,11417
+497,Howard Beach,11414
+498,Howard Beach,11430
+499,Hudson Sq,10014
+500,Hudson Sq,10012
+501,Hudson Sq,10013
+502,Hunts Point,10459
+503,Hunts Point,10474
+504,Hunts Point,10455
+505,Hunts Point,10454
+506,Inwood,10034
+507,Inwood,10040
+508,Inwood Hill Park,10463
+509,Jackson Heights,11372
+510,Jackson Heights,11373
+511,Jackson Heights,11371
+512,Jackson Heights,11370
+513,Jackson Heights,11369
+514,Jackson Heights,11368
+515,Jackson Heights,11377
+516,Jamaica,11423
+517,Jamaica,11432
+518,Jamaica,11435
+519,Jamaica,11433
+520,Jamaica,11451
+521,Jamaica Estates,11427
+522,Jamaica Estates,11366
+523,Jamaica Estates,11423
+524,Jamaica Estates,11428
+525,Jamaica Estates,11432
+526,JFK Airport,11434
+527,JFK Airport,11413
+528,JFK Airport,11420
+529,JFK Airport,11414
+530,JFK Airport,11430
+531,Kensington,11218
+532,Kensington,11232
+533,Kew Gardens,11375
+534,Kew Gardens,11435
+535,Kew Gardens,11415
+536,Kew Gardens,11418
+537,Kew Gardens,11367
+538,Kew Gardens,11385
+539,Kew Gardens Hills,11365
+540,Kew Gardens Hills,11366
+541,Kew Gardens Hills,11432
+542,Kew Gardens Hills,11435
+543,Kew Gardens Hills,11367
+544,Kingsbridge Heights,10463
+545,Kingsbridge Heights,10468
+546,Kingsbridge Heights,10463
+547,Kingsbridge Heights,10453
+548,Kips Bay,10016
+549,Kips Bay,10010
+550,Kips Bay,10002
+551,LaGuardia Airport,11371
+552,LaGuardia Airport,11370
+553,LaGuardia Airport,11369
+554,LaGuardia Airport,11368
+555,Laurelton,11411
+556,Laurelton,11413
+557,Laurelton,11422
+558,Lenox Hill East,10021
+559,Lenox Hill East,10162
+560,Lenox Hill East,10022
+561,Lenox Hill East,10065
+562,Lenox Hill East,10075
+563,Lenox Hill West,10021
+564,Lenox Hill West,10022
+565,Lenox Hill West,10065
+566,Lenox Hill West,10075
+567,Lincoln Square East,00083
+568,Lincoln Square East,10023
+569,Lincoln Square East,10019
+570,Lincoln Square West,10023
+571,Lincoln Square West,10019
+572,Lincoln Square West,10069
+573,Little Italy/NoLiTa,10003
+574,Little Italy/NoLiTa,10002
+575,Little Italy/NoLiTa,10012
+576,Little Italy/NoLiTa,10013
+577,Long Island City/Hunters Point,11101
+578,Long Island City/Hunters Point,11109
+579,Long Island City/Queens Plaza,11106
+580,Long Island City/Queens Plaza,11101
+581,Longwood,10456
+582,Longwood,10459
+583,Longwood,10474
+584,Longwood,10455
+585,Longwood,10454
+586,Lower East Side,10003
+587,Lower East Side,10002
+588,Lower East Side,10009
+589,Lower East Side,10012
+590,Lower East Side,10013
+591,Madison,11210
+592,Madison,11230
+593,Madison,11234
+594,Madison,11229
+595,Manhattan Beach,11235
+596,Manhattan Valley,10024
+597,Manhattan Valley,10025
+598,Manhattan Valley,00083
+599,Manhattanville,10031
+600,Manhattanville,10030
+601,Manhattanville,10027
+602,Manhattanville,10024
+603,Marble Hill,10463
+604,Marble Hill,10463
+605,Marine Park/Floyd Bennett Field,11234
+606,Marine Park/Floyd Bennett Field,11229
+607,Marine Park/Mill Basin,11210
+608,Marine Park/Mill Basin,11236
+609,Marine Park/Mill Basin,11234
+610,Marine Park/Mill Basin,11229
+611,Mariners Harbor,10303
+612,Mariners Harbor,10302
+613,Mariners Harbor,10314
+614,Maspeth,11373
+615,Maspeth,11379
+616,Maspeth,11377
+617,Maspeth,11378
+618,Maspeth,11385
+619,Meatpacking/West Village West,10011
+620,Meatpacking/West Village West,10014
+621,Meatpacking/West Village West,10013
+622,Melrose South,10456
+623,Melrose South,10459
+624,Melrose South,10451
+625,Melrose South,10455
+626,Melrose South,10454
+627,Middle Village,11373
+628,Middle Village,11374
+629,Middle Village,11379
+630,Middle Village,11378
+631,Middle Village,11385
+632,Midtown Center,10036
+633,Midtown Center,10018
+634,Midtown Center,10020
+635,Midtown Center,10017
+636,Midtown Center,10055
+637,Midtown Center,10176
+638,Midtown Center,10019
+639,Midtown Center,10111
+640,Midtown Center,10103
+641,Midtown Center,10177
+642,Midtown Center,10104
+643,Midtown Center,10110
+644,Midtown Center,10175
+645,Midtown Center,10173
+646,Midtown Center,10022
+647,Midtown Center,10096
+648,Midtown Center,10196
+649,Midtown Center,10196
+650,Midtown East,10017
+651,Midtown East,10170
+652,Midtown East,10112
+653,Midtown East,10174
+654,Midtown East,10166
+655,Midtown East,10169
+656,Midtown East,10167
+657,Midtown East,10172
+658,Midtown East,10171
+659,Midtown East,10154
+660,Midtown East,10152
+661,Midtown East,10155
+662,Midtown East,10022
+663,Midtown North,00083
+664,Midtown North,10023
+665,Midtown North,10105
+666,Midtown North,10019
+667,Midtown North,10107
+668,Midtown North,10153
+669,Midtown North,10151
+670,Midtown North,10106
+671,Midtown North,10022
+672,Midtown South,10036
+673,Midtown South,10018
+674,Midtown South,10017
+675,Midtown South,10001
+676,Midtown South,10016
+677,Midtown South,10118
+678,Midwood,11210
+679,Midwood,11230
+680,Midwood,11229
+681,Midwood,11223
+682,Morningside Heights,10027
+683,Morningside Heights,10024
+684,Morningside Heights,10026
+685,Morningside Heights,10025
+686,Morningside Heights,10115
+687,Morrisania/Melrose,10460
+688,Morrisania/Melrose,10456
+689,Morrisania/Melrose,10459
+690,Morrisania/Melrose,10451
+691,Mott Haven/Port Morris,10451
+692,Mott Haven/Port Morris,10455
+693,Mott Haven/Port Morris,10454
+694,Mount Hope,10453
+695,Mount Hope,10457
+696,Mount Hope,10452
+697,Murray Hill,10036
+698,Murray Hill,10018
+699,Murray Hill,10017
+700,Murray Hill,10001
+701,Murray Hill,10016
+702,Murray Hill,10165
+703,Murray Hill,10168
+704,Murray Hill,10178
+705,Murray Hill-Queens,11357
+706,Murray Hill-Queens,11354
+707,Murray Hill-Queens,11358
+708,Murray Hill-Queens,11355
+709,New Dorp/Midland Beach,10304
+710,New Dorp/Midland Beach,10305
+711,New Dorp/Midland Beach,10306
+712,North Corona,11372
+713,North Corona,11373
+714,North Corona,11369
+715,North Corona,11368
+716,Norwood,10471
+717,Norwood,10467
+718,Norwood,10463
+719,Norwood,10468
+720,Norwood,10458
+721,Oakland Gardens,11426
+722,Oakland Gardens,11427
+723,Oakland Gardens,11361
+724,Oakland Gardens,11364
+725,Oakwood,10306
+726,Oakwood,10308
+727,Ocean Hill,11221
+728,Ocean Hill,11233
+729,Ocean Hill,11212
+730,Ocean Hill,11207
+731,Ocean Parkway South,11230
+732,Ocean Parkway South,11204
+733,Ocean Parkway South,11223
+734,Old Astoria,11105
+735,Old Astoria,11102
+736,Old Astoria,11103
+737,Old Astoria,11106
+738,Ozone Park,11416
+739,Ozone Park,11208
+740,Ozone Park,11420
+741,Ozone Park,11417
+742,Ozone Park,11414
+743,Park Slope,11217
+744,Park Slope,11238
+745,Park Slope,11215
+746,Park Slope,11232
+747,Parkchester,10462
+748,Parkchester,10461
+749,Parkchester,10460
+750,Parkchester,10472
+751,Pelham Bay,10461
+752,Pelham Bay Park,10475
+753,Pelham Bay Park,10464
+754,Pelham Bay Park,10469
+755,Pelham Bay Park,10465
+756,Pelham Bay Park,10461
+757,Pelham Parkway,10467
+758,Pelham Parkway,10469
+759,Pelham Parkway,10462
+760,Pelham Parkway,10461
+761,Penn Station/Madison Sq West,10001
+762,Penn Station/Madison Sq West,10010
+763,Penn Station/Madison Sq West,10119
+764,Penn Station/Madison Sq West,10121
+765,Penn Station/Madison Sq West,10120
+766,Port Richmond,10310
+767,Port Richmond,10303
+768,Port Richmond,10302
+769,Port Richmond,10314
+770,Prospect-Lefferts Gardens,11213
+771,Prospect-Lefferts Gardens,11212
+772,Prospect-Lefferts Gardens,11225
+773,Prospect-Lefferts Gardens,11226
+774,Prospect-Lefferts Gardens,11238
+775,Prospect-Lefferts Gardens,11215
+776,Prospect-Lefferts Gardens,11203
+777,Prospect Heights,11217
+778,Prospect Heights,11238
+779,Prospect Park,11225
+780,Prospect Park,11218
+781,Prospect Park,11226
+782,Prospect Park,11238
+783,Prospect Park,11215
+784,Queens Village,11426
+785,Queens Village,11427
+786,Queens Village,11423
+787,Queens Village,11428
+788,Queens Village,11429
+789,Queens Village,11412
+790,Queens Village,11411
+791,Queensboro Hill,11365
+792,Queensboro Hill,11358
+793,Queensboro Hill,11355
+794,Queensboro Hill,11367
+795,Queensbridge/Ravenswood,11102
+796,Queensbridge/Ravenswood,11106
+797,Queensbridge/Ravenswood,11101
+798,Randalls Island,10035
+799,Red Hook,11201
+800,Red Hook,11231
+801,Red Hook,11215
+802,Red Hook,11231
+803,Rego Park,11373
+804,Rego Park,11375
+805,Rego Park,11374
+806,Rego Park,11379
+807,Rego Park,11368
+808,Rego Park,11385
+809,Richmond Hill,11435
+810,Richmond Hill,11415
+811,Richmond Hill,11418
+812,Richmond Hill,11421
+813,Richmond Hill,11419
+814,Richmond Hill,11416
+815,Richmond Hill,11385
+816,Richmond Hill,11417
+817,Ridgewood,11379
+818,Ridgewood,11378
+819,Ridgewood,11237
+820,Ridgewood,11385
+821,Rikers Island,11370
+822,Riverdale/North Riverdale/Fieldston,10471
+823,Riverdale/North Riverdale/Fieldston,10463
+824,Rockaway Park,11693
+825,Rockaway Park,11694
+826,Roosevelt Island,10044
+827,Rosedale,11411
+828,Rosedale,11413
+829,Rosedale,11422
+830,Rosedale,11430
+831,Rossville/Woodrow,10312
+832,Rossville/Woodrow,10309
+833,Saint Albans,11423
+834,Saint Albans,11433
+835,Saint Albans,11434
+836,Saint Albans,11412
+837,Saint Albans,11411
+838,Saint Albans,11413
+839,Saint George/New Brighton,10301
+840,Saint George/New Brighton,10310
+841,Saint George/New Brighton,10302
+842,Saint Michaels Cemetery/Woodside,11370
+843,Saint Michaels Cemetery/Woodside,11103
+844,Saint Michaels Cemetery/Woodside,11377
+845,Schuylerville/Edgewater Park,10462
+846,Schuylerville/Edgewater Park,10465
+847,Schuylerville/Edgewater Park,10461
+848,Seaport,10002
+849,Seaport,10007
+850,Seaport,10038
+851,Sheepshead Bay,11234
+852,Sheepshead Bay,11229
+853,Sheepshead Bay,11235
+854,SoHo,10014
+855,SoHo,10012
+856,SoHo,10013
+857,Soundview/Bruckner,10462
+858,Soundview/Bruckner,10472
+859,Soundview/Bruckner,10473
+860,Soundview/Castle Hill,10462
+861,Soundview/Castle Hill,10465
+862,South Beach/Dongan Hills,10304
+863,South Beach/Dongan Hills,10305
+864,South Beach/Dongan Hills,10306
+865,South Jamaica,11435
+866,South Jamaica,11433
+867,South Jamaica,11434
+868,South Jamaica,11436
+869,South Ozone Park,11435
+870,South Ozone Park,11419
+871,South Ozone Park,11416
+872,South Ozone Park,11436
+873,South Ozone Park,11420
+874,South Ozone Park,11417
+875,South Ozone Park,11414
+876,South Ozone Park,11430
+877,South Williamsburg,11211
+878,South Williamsburg,11206
+879,South Williamsburg,11251
+880,South Williamsburg,11205
+881,Springfield Gardens North,11434
+882,Springfield Gardens North,11436
+883,Springfield Gardens North,11413
+884,Springfield Gardens North,11430
+885,Springfield Gardens South,11434
+886,Springfield Gardens South,11436
+887,Springfield Gardens South,11413
+888,Springfield Gardens South,11422
+889,Springfield Gardens South,11430
+890,Spuyten Duyvil/Kingsbridge,10471
+891,Spuyten Duyvil/Kingsbridge,10463
+892,Spuyten Duyvil/Kingsbridge,10463
+893,Stapleton,10301
+894,Stapleton,10304
+895,Stapleton,10305
+896,Starrett City,11207
+897,Starrett City,11239
+898,Starrett City,11236
+899,Steinway,11105
+900,Steinway,11371
+901,Steinway,11102
+902,Steinway,11370
+903,Steinway,11103
+904,Steinway,11377
+905,Stuy Town/Peter Cooper Village,10010
+906,Stuy Town/Peter Cooper Village,10003
+907,Stuy Town/Peter Cooper Village,10002
+908,Stuy Town/Peter Cooper Village,10009
+909,Stuyvesant Heights,11221
+910,Stuyvesant Heights,11216
+911,Stuyvesant Heights,11233
+912,Stuyvesant Heights,11213
+913,Stuyvesant Heights,11206
+914,Sunnyside,11103
+915,Sunnyside,11377
+916,Sunnyside,11101
+917,Sunnyside,11104
+918,Sunnyside,11378
+919,Sunset Park East,11218
+920,Sunset Park East,11219
+921,Sunset Park East,11232
+922,Sunset Park East,11220
+923,Sunset Park West,11215
+924,Sunset Park West,11232
+925,Sunset Park West,11220
+926,Sutton Place/Turtle Bay North,10017
+927,Sutton Place/Turtle Bay North,10022
+928,Sutton Place/Turtle Bay North,10065
+929,Times Sq/Theatre District,10036
+930,Times Sq/Theatre District,10018
+931,Times Sq/Theatre District,10020
+932,Times Sq/Theatre District,10019
+933,Times Sq/Theatre District,10097
+934,TriBeCa/Civic Center,10013
+935,TriBeCa/Civic Center,10007
+936,TriBeCa/Civic Center,10038
+937,TriBeCa/Civic Center,10048
+938,TriBeCa/Civic Center,10279
+939,TriBeCa/Civic Center,10278
+940,Two Bridges/Seward Park,10002
+941,Two Bridges/Seward Park,10009
+942,UN/Turtle Bay South,10017
+943,UN/Turtle Bay South,10016
+944,UN/Turtle Bay South,10158
+945,UN/Turtle Bay South,10022
+946,Union Sq,10001
+947,Union Sq,10011
+948,Union Sq,10016
+949,Union Sq,10010
+950,Union Sq,10003
+951,University Heights/Morris Heights,10468
+952,University Heights/Morris Heights,10453
+953,University Heights/Morris Heights,10452
+954,Upper East Side North,10029
+955,Upper East Side North,10128
+956,Upper East Side North,10028
+957,Upper East Side North,10021
+958,Upper East Side North,10075
+959,Upper East Side South,00083
+960,Upper East Side South,10021
+961,Upper East Side South,10019
+962,Upper East Side South,10022
+963,Upper East Side South,10065
+964,Upper East Side South,10075
+965,Upper West Side North,10024
+966,Upper West Side North,10025
+967,Upper West Side North,00083
+968,Upper West Side South,10024
+969,Upper West Side South,00083
+970,Upper West Side South,10023
+971,Van Cortlandt Park,10471
+972,Van Cortlandt Park,10470
+973,Van Cortlandt Park,10466
+974,Van Cortlandt Park,10467
+975,Van Cortlandt Park,10463
+976,Van Cortlandt Village,10471
+977,Van Cortlandt Village,10467
+978,Van Cortlandt Village,10463
+979,Van Cortlandt Village,10468
+980,Van Cortlandt Village,10458
+981,Van Nest/Morris Park,10469
+982,Van Nest/Morris Park,10462
+983,Van Nest/Morris Park,10461
+984,Van Nest/Morris Park,10460
+985,Washington Heights North,10034
+986,Washington Heights North,10033
+987,Washington Heights North,10040
+988,Washington Heights North,10032
+989,Washington Heights South,10033
+990,Washington Heights South,10032
+991,Washington Heights South,10031
+992,West Brighton,10301
+993,West Brighton,10310
+994,West Brighton,10304
+995,West Chelsea/Hudson Yards,10036
+996,West Chelsea/Hudson Yards,10018
+997,West Chelsea/Hudson Yards,10001
+998,West Chelsea/Hudson Yards,10011
+999,West Chelsea/Hudson Yards,10014
+1000,West Chelsea/Hudson Yards,10019
+1001,West Concourse,10457
+1002,West Concourse,10452
+1003,West Concourse,10456
+1004,West Concourse,10451
+1005,West Farms/Bronx River,10462
+1006,West Farms/Bronx River,10460
+1007,West Farms/Bronx River,10472
+1008,West Village,10011
+1009,West Village,10014
+1010,West Village,10012
+1011,Westchester Village/Unionport,10462
+1012,Westchester Village/Unionport,10461
+1013,Westchester Village/Unionport,10472
+1014,Westchester Village/Unionport,10473
+1015,Westerleigh,10301
+1016,Westerleigh,10310
+1017,Westerleigh,10302
+1018,Westerleigh,10304
+1019,Westerleigh,10314
+1020,Whitestone,11357
+1021,Whitestone,11356
+1022,Whitestone,11360
+1023,Willets Point,11368
+1024,Williamsbridge/Olinville,10466
+1025,Williamsbridge/Olinville,10467
+1026,Williamsbridge/Olinville,10469
+1027,Williamsburg (North Side),11222
+1028,Williamsburg (North Side),11211
+1029,Williamsburg (South Side),11211
+1030,Williamsburg (South Side),11206
+1031,Williamsburg (South Side),11251
+1032,Windsor Terrace,11218
+1033,Windsor Terrace,11226
+1034,Windsor Terrace,11215
+1035,Windsor Terrace,11232
+1036,Woodhaven,11418
+1037,Woodhaven,11421
+1038,Woodhaven,11416
+1039,Woodhaven,11385
+1040,Woodhaven,11208
+1041,Woodhaven,11417
+1042,Woodlawn/Wakefield,10470
+1043,Woodlawn/Wakefield,10466
+1044,Woodlawn/Wakefield,10467
+1045,Woodside,11372
+1046,Woodside,11103
+1047,Woodside,11377
+1048,Woodside,11101
+1049,Woodside,11104
+1050,Woodside,11378
+1051,World Trade Center,10007
+1052,World Trade Center,10038
+1053,World Trade Center,10006
+1054,World Trade Center,10005
+1055,World Trade Center,10004
+1056,World Trade Center,10280
+1057,World Trade Center,10048
+1058,World Trade Center,10275
+1059,World Trade Center,10080
+1060,World Trade Center,10281
+1061,Yorkville East,10029
+1062,Yorkville East,10128
+1063,Yorkville East,10028
+1064,Yorkville East,10075
+1065,Yorkville West,10128
+1066,Yorkville West,10028
+1067,Yorkville West,10075
