@@ -39,8 +39,9 @@ app = dash.Dash(
 
 # figures
 choroplethHeight = 600
-taxifig = px.choropleth(taxidf, geojson=taxigj, locations="PULocationID", color="log_total_amount",
-                    featureidkey="properties.LocationID", projection="mercator")
+taxifig = px.choropleth(taxidf, geojson=taxigj, 
+                        locations="PULocationID", color="yellow_log_total_amount",
+                        featureidkey="properties.LocationID", projection="mercator")
 taxifig.update_geos(fitbounds="locations", visible=False)
 taxifig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, height=choroplethHeight)
 
