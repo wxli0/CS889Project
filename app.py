@@ -26,8 +26,7 @@ with open(map_data_path + "zip_codes.geojson") as f:
 nzips = len(covidgj["features"])
 
 # covid data
-npdata = np.array([i+1 for i in range(nzips)])
-coviddf = pd.DataFrame(data=npdata, columns=["value"])
+coviddf = pd.read_csv(covid_data_path + "covid_data-2020-3.csv")[:nzips]
 
 # dash app
 app = dash.Dash(
@@ -45,8 +44,9 @@ taxifig = px.choropleth(taxidf, geojson=taxigj,
 taxifig.update_geos(fitbounds="locations", visible=False)
 taxifig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, height=choroplethHeight)
 
-covidfig = px.choropleth(coviddf, geojson=covidgj, locations="value",
-                    featureidkey="properties.OBJECTID", projection="mercator")
+covidfig = px.choropleth(coviddf, geojson=covidgj,
+                            locations="zip_code", color="hospitalization_rate",
+                            featureidkey="properties.postalCode", projection="mercator")
 covidfig.update_geos(fitbounds="locations", visible=False)
 covidfig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, height=choroplethHeight)
 
