@@ -1,2 +1,8 @@
 # ignore raw data files
 rawdata/
+
+# swap files
+*.swp
+
+# ipynb checkpoints
+.ipynb_checkpoints/
