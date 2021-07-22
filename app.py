@@ -68,7 +68,8 @@ def get_taxifig(selectedLocs):
 
     if (len(selectedLocs) > 0):
         highlights = get_highlights(selectedLocs, taxigj, taxi_lookup)
-        taxiHighlights = px.choropleth(taxidf, geojson=highlights,
+        taxiHighlights = px.choropleth(taxidf.loc[taxidf["PULocationID"].isin(selectedLocs)],
+                                        geojson=highlights,
                                         locations="PULocationID", color="yellow_log_total_amount",
                                         color_continuous_scale="Viridis",
                                         featureidkey="properties.LocationID",
@@ -87,7 +88,8 @@ def get_covidfig(selectedZips):
 
     if (len(selectedZips) > 0):
         highlights = get_highlights(selectedZips, covidgj, zip_lookup)
-        covidHighlights = px.choropleth(coviddf, geojson=highlights,
+        covidHighlights = px.choropleth(coviddf.loc[coviddf["zip_code"].isin(selectedZips)],
+                                        geojson=highlights,
                                         locations="zip_code", color="hospitalization_rate",
                                         color_continuous_scale="Viridis",
                                         featureidkey="properties.postalCode",
