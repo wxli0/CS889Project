@@ -121,7 +121,7 @@ app.layout = html.Div([
 @app.callback(
     Output("taxi-choropleth", "figure"),
     [Input("taxi-choropleth", "clickData")])
-def update_covidfig(clickData):
+def update_taxifig(clickData):
     location = None
     selectedLoc = []
     if clickData is not None:
