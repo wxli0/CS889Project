@@ -42,11 +42,29 @@ app = dash.Dash(
 
 # figures
 choroplethHeight = 600
-def get_taxifig(selectedLocs):
-    taxifig = px.choropleth(taxidf, geojson=taxigj,
+taxifig = px.choropleth(taxidf, geojson=taxigj,
                             locations="PULocationID", color="yellow_log_total_amount",
                             color_continuous_scale="Viridis",
                             featureidkey="properties.LocationID", projection="mercator")
+
+covidfig = px.choropleth(coviddf, geojson=covidgj,
+                            locations="zip_code", color="hospitalization_rate",
+                            color_continuous_scale="Viridis",
+                            featureidkey="properties.postalCode", projection="mercator")
+
+def get_highlights(selections, geojson, lookup_dict):
+    highlights = dict()
+    for k in geojson.keys():
+        if k != "features":
+            highlights[k] = geojson[k]
+        else:
+            highlights[k] = [lookup_dict[selection] for selection in selections]
+
+    return highlights
+
+def get_taxifig(selectedLocs):
+    # clear traces
+    taxifig.data = [taxifig.data[0]]
 
     if (len(selectedLocs) > 0):
         highlights = get_highlights(selectedLocs, taxigj, taxi_lookup)
@@ -62,22 +80,11 @@ def get_taxifig(selectedLocs):
     taxifig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, height=choroplethHeight)
 
     return taxifig
-
-def get_highlights(selections, geojson, lookup_dict):
-    highlights = dict()
-    for k in geojson.keys():
-        if k != "features":
-            highlights[k] = geojson[k]
-        else:
-            highlights[k] = [lookup_dict[selection] for selection in selections]
-
-    return highlights
             
 def get_covidfig(selectedZips):
-    covidfig = px.choropleth(coviddf, geojson=covidgj,
-                                locations="zip_code", color="hospitalization_rate",
-                                color_continuous_scale="Viridis",
-                                featureidkey="properties.postalCode", projection="mercator")
+    # clear traces
+    covidfig.data = [covidfig.data[0]]
+
     if (len(selectedZips) > 0):
         highlights = get_highlights(selectedZips, covidgj, zip_lookup)
         covidHighlights = px.choropleth(coviddf, geojson=highlights,
@@ -97,11 +104,13 @@ def get_covidfig(selectedZips):
 app.layout = html.Div([
     html.Div([ 
         html.Div([
-            dcc.Graph(id="covid-choropleth")
+            dcc.Graph(id="covid-choropleth",
+            figure=covidfig)
         ], className="six columns"),
 
         html.Div([
-            dcc.Graph(id="taxi-choropleth")
+            dcc.Graph(id="taxi-choropleth",
+            figure=taxifig)
         ], className="six columns"),
     ], className="row")
 ])
