@@ -16,6 +16,8 @@ taxi_data_path = "taxi_data/"
 with open(map_data_path + "taxi_zones.geojson") as f:
     taxigj = geojson.load(f)
 nzones = len(taxigj["features"])
+taxi_lookup = {int(feature["properties"]["LocationID"]) : feature
+                for feature in taxigj["features"]}
 
 # taxi data
 taxidf = pd.read_csv(taxi_data_path + "taxi_data.csv")[:nzones]
@@ -40,23 +42,36 @@ app = dash.Dash(
 
 # figures
 choroplethHeight = 600
-taxifig = px.choropleth(taxidf, geojson=taxigj, 
-                        locations="PULocationID", color="yellow_log_total_amount",
-                        color_continuous_scale="Viridis",
-                        featureidkey="properties.LocationID", projection="mercator")
+def get_taxifig(selectedLocs):
+    taxifig = px.choropleth(taxidf, geojson=taxigj,
+                            locations="PULocationID", color="yellow_log_total_amount",
+                            color_continuous_scale="Viridis",
+                            featureidkey="properties.LocationID", projection="mercator")
 
-taxifig.update_geos(fitbounds="locations", visible=False)
-taxifig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, height=choroplethHeight)
+    if (len(selectedLocs) > 0):
+        highlights = get_highlights(selectedLocs, taxigj, taxi_lookup)
+        taxiHighlights = px.choropleth(taxidf, geojson=highlights,
+                                        locations="PULocationID", color="yellow_log_total_amount",
+                                        color_continuous_scale="Viridis",
+                                        featureidkey="properties.LocationID",
+                                        projection="mercator")
+        taxiHighlights.update_traces(marker_line=dict(color="red", width=5))
+        taxifig.add_trace(taxiHighlights.data[0])
 
-def get_covidfig_highlights(selections, covidgj=covidgj, zip_lookup=zip_lookup):
-    covidgj_highlights = dict()
-    for k in covidgj.keys():
+    taxifig.update_geos(fitbounds="locations", visible=False)
+    taxifig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, height=choroplethHeight)
+
+    return taxifig
+
+def get_highlights(selections, geojson, lookup_dict):
+    highlights = dict()
+    for k in geojson.keys():
         if k != "features":
-            covidgj_highlights[k] = covidgj[k]
+            highlights[k] = geojson[k]
         else:
-            covidgj_highlights[k] = [zip_lookup[selection] for selection in selections]
+            highlights[k] = [lookup_dict[selection] for selection in selections]
 
-    return covidgj_highlights
+    return highlights
             
 def get_covidfig(selectedZips):
     covidfig = px.choropleth(coviddf, geojson=covidgj,
@@ -64,7 +79,7 @@ def get_covidfig(selectedZips):
                                 color_continuous_scale="Viridis",
                                 featureidkey="properties.postalCode", projection="mercator")
     if (len(selectedZips) > 0):
-        highlights = get_covidfig_highlights(selectedZips)
+        highlights = get_highlights(selectedZips, covidgj, zip_lookup)
         covidHighlights = px.choropleth(coviddf, geojson=highlights,
                                         locations="zip_code", color="hospitalization_rate",
                                         color_continuous_scale="Viridis",
@@ -86,26 +101,39 @@ app.layout = html.Div([
         ], className="six columns"),
 
         html.Div([
-            dcc.Graph(id="taxi-choropleth",
-                        figure=taxifig),
+            dcc.Graph(id="taxi-choropleth")
         ], className="six columns"),
     ], className="row")
 ])
 
 # interactions
 @app.callback(
-    Output("covid-choropleth", "figure"),
-    [Input("covid-choropleth", "clickData")])
-def update_choropleths(clickData):
+    Output("taxi-choropleth", "figure"),
+    [Input("taxi-choropleth", "clickData")])
+def update_covidfig(clickData):
     location = None
-    selectedZips = []
+    selectedLoc = []
     if clickData is not None:
         location = clickData["points"][0]["location"]
 
-    if location and location not in selectedZips:
-        selectedZips = [location]
+    if location:
+        selectedLoc = [location]
 
-    return get_covidfig(selectedZips)
+    return get_taxifig(selectedLoc)
+
+@app.callback(
+    Output("covid-choropleth", "figure"),
+    [Input("covid-choropleth", "clickData")])
+def update_covidfig(clickData):
+    location = None
+    selectedZip = []
+    if clickData is not None:
+        location = clickData["points"][0]["location"]
+
+    if location:
+        selectedZip = [location]
+
+    return get_covidfig(selectedZip)
 
 # main
 if __name__ == "__main__":
