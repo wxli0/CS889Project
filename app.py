@@ -48,11 +48,23 @@ choroplethHeight = 600
 taxifig = px.choropleth(taxidf, geojson=taxigj,
                             locations="PULocationID", color="yellow_log_total_amount",
                             color_continuous_scale="Viridis",
+                            hover_name="Zone",
+                            hover_data={
+                                "yellow_total_amount": ":.2f",
+                                "green_total_amount" : ":.2f",
+                                "Borough" : True,
+                                "service_zone" : True,
+                                "yellow_log_total_amount" : False,
+                                "green_log_total_amount" : False},
                             featureidkey="properties.LocationID", projection="mercator")
 
 covidfig = px.choropleth(coviddf, geojson=covidgj,
                             locations="zip_code", color="hospitalization_rate",
                             color_continuous_scale="Viridis",
+                            hover_name="zip_code",
+                            hover_data={
+                                "hospitalization_rate" : ":.2f",
+                                "zip_code" : False},
                             featureidkey="properties.postalCode", projection="mercator")
 
 def get_highlights(selections, geojson, lookup_dict):
@@ -75,6 +87,14 @@ def get_taxifig(selectedLocs):
                                         geojson=highlights,
                                         locations="PULocationID", color="yellow_log_total_amount",
                                         color_continuous_scale="Viridis",
+                                        hover_name="Zone",
+                                        hover_data={
+                                            "yellow_total_amount": ":.2f",
+                                            "green_total_amount" : ":.2f",
+                                            "Borough" : True,
+                                            "service_zone" : True,
+                                            "yellow_log_total_amount" : False,
+                                            "green_log_total_amount" : False},
                                         featureidkey="properties.LocationID",
                                         projection="mercator")
         taxiHighlights.update_traces(marker_line=dict(color="red", width=5))
@@ -95,6 +115,10 @@ def get_covidfig(selectedZips):
                                         geojson=highlights,
                                         locations="zip_code", color="hospitalization_rate",
                                         color_continuous_scale="Viridis",
+                                        hover_name="zip_code",
+                                        hover_data={
+                                            "hospitalization_rate" : ":.2f",
+                                            "zip_code" : False},
                                         featureidkey="properties.postalCode",
                                         projection="mercator")
         covidHighlights.update_traces(marker_line=dict(color="red", width=5))
