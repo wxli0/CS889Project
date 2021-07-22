@@ -32,6 +32,9 @@ zip_lookup = {int(feature["properties"]["postalCode"]) : feature
 # covid data
 coviddf = pd.read_csv(covid_data_path + "covid_data-2020-3.csv")[:nzips]
 
+# zone overlap
+overlapdf = pd.read_csv(map_data_path + "taxi_zip_overlap.csv")
+
 # dash app
 app = dash.Dash(
     __name__,
@@ -118,33 +121,45 @@ app.layout = html.Div([
 ])
 
 # interactions
-@app.callback(
-    Output("taxi-choropleth", "figure"),
-    [Input("taxi-choropleth", "clickData")])
-def update_taxifig(clickData):
-    location = None
-    selectedLoc = []
-    if clickData is not None:
-        location = clickData["points"][0]["location"]
+covidTriggerStr = "covid-choropleth.clickData"
+taxiTriggerStr = "taxi-choropleth.clickData"
 
-    if location:
-        selectedLoc = [location]
-
-    return get_taxifig(selectedLoc)
-
-@app.callback(
+@app.callback([
     Output("covid-choropleth", "figure"),
-    [Input("covid-choropleth", "clickData")])
-def update_covidfig(clickData):
-    location = None
-    selectedZip = []
-    if clickData is not None:
-        location = clickData["points"][0]["location"]
+    Output("taxi-choropleth", "figure")
+], [
+    Input("covid-choropleth", "clickData"),
+    Input("taxi-choropleth", "clickData")])
+def update_plots(covidClickData, taxiClickData):
+    ctx = dash.callback_context
+    #ctx_msg = json.dumps({
+    #    'states': ctx.states,
+    #    'triggered': ctx.triggered,
+    #    'inputs': ctx.inputs
+    #}, indent=2)
 
-    if location:
-        selectedZip = [location]
+    # vars to be filled in
+    covidLocation = None
+    taxiLocation = None
+    selectedZips = []
+    selectedLocs = []
 
-    return get_covidfig(selectedZip)
+    # figure out which map triggered the callback
+    if ctx.triggered[0]["prop_id"] == covidTriggerStr:
+        if covidClickData is not None:
+            covidLocation = covidClickData["points"][0]["location"]
+    elif ctx.triggered[0]["prop_id"] == taxiTriggerStr:
+        if taxiClickData is not None:
+            taxiLocation = taxiClickData["points"][0]["location"]
+
+    if covidLocation:
+        selectedZips = [covidLocation]
+        selectedLocs = list(overlapdf[overlapdf["zip_code"] == covidLocation]["LocationID"])
+    elif taxiLocation:
+        selectedLocs = [taxiLocation]
+        selectedZips = list(overlapdf[overlapdf["LocationID"] == taxiLocation]["zip_code"])
+
+    return get_covidfig(selectedZips), get_taxifig(selectedLocs)
 
 # main
 if __name__ == "__main__":
