@@ -58,9 +58,12 @@ taxifig = px.choropleth(taxidf, geojson=taxigj,
                                 "green_log_total_amount" : False},
                             featureidkey="properties.LocationID", projection="mercator")
 
+coviddf["str_zip_code"] = coviddf["zip_code"].astype("str")
+cmap = {str_zip_code : "red" for str_zip_code in coviddf["str_zip_code"]} # assign all to red
 covidfig = px.choropleth(coviddf, geojson=covidgj,
-                            locations="zip_code", color="hospitalization_rate",
-                            color_continuous_scale="Viridis",
+                            locations="zip_code",
+                            color="str_zip_code",
+                            color_discrete_map=cmap,
                             hover_name="zip_code",
                             hover_data={
                                 "hospitalization_rate" : ":.2f",
@@ -113,8 +116,9 @@ def get_covidfig(selectedZips):
         highlights = get_highlights(selectedZips, covidgj, zip_lookup)
         covidHighlights = px.choropleth(coviddf.loc[coviddf["zip_code"].isin(selectedZips)],
                                         geojson=highlights,
-                                        locations="zip_code", color="hospitalization_rate",
-                                        color_continuous_scale="Viridis",
+                                        locations="zip_code",
+                                        color="str_zip_code",
+                                        color_discrete_map=cmap,
                                         hover_name="zip_code",
                                         hover_data={
                                             "hospitalization_rate" : ":.2f",
