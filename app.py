@@ -67,6 +67,14 @@ covidfig = px.choropleth(coviddf, geojson=covidgj,
                                 "zip_code" : False},
                             featureidkey="properties.postalCode", projection="mercator")
 
+dummy_df = pd.DataFrame({
+    "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
+    "Amount": [4, 1, 2, 2, 4, 5],
+    "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
+})
+
+dummy_fig = px.bar(dummy_df, x="Fruit", y="Amount", color="City", barmode="group")
+
 def get_highlights(selections, geojson, lookup_dict):
     highlights = dict()
     for k in geojson.keys():
@@ -141,7 +149,19 @@ app.layout = html.Div([
             dcc.Graph(id="taxi-choropleth",
             figure=taxifig)
         ], className="six columns"),
-    ], className="row")
+    ], className="row"),
+
+    html.Div([ 
+        html.Div([
+            dcc.Graph(id='example-graph_1',
+            figure=dummy_fig)
+        ], className="six columns"),
+
+        html.Div([
+            dcc.Graph(id='example-graph_2',
+            figure=dummy_fig)
+        ], className="six columns"),
+    ], className="row", id="drilldown", style= {'display': 'block'})
 ])
 
 # interactions
@@ -150,11 +170,14 @@ taxiTriggerStr = "taxi-choropleth.clickData"
 
 @app.callback([
     Output("covid-choropleth", "figure"),
-    Output("taxi-choropleth", "figure")
+    Output("taxi-choropleth", "figure"),
+    Output("drilldown", "style")
 ], [
     Input("covid-choropleth", "clickData"),
-    Input("taxi-choropleth", "clickData")])
-def update_plots(covidClickData, taxiClickData):
+    Input("taxi-choropleth", "clickData"),
+    Input("drilldown", "style")])
+def update_plots(covidClickData, taxiClickData, currentVisibility):
+    print(currentVisibility)
     ctx = dash.callback_context
     #ctx_msg = json.dumps({
     #    'states': ctx.states,
@@ -183,7 +206,11 @@ def update_plots(covidClickData, taxiClickData):
         selectedLocs = [taxiLocation]
         selectedZips = list(overlapdf[overlapdf["LocationID"] == taxiLocation]["zip_code"])
 
-    return get_covidfig(selectedZips), get_taxifig(selectedLocs)
+    newVisibility = "block"
+    if currentVisibility["display"] == "block":
+        newVisibility = "none"
+
+    return get_covidfig(selectedZips), get_taxifig(selectedLocs), {"display": newVisibility}
 
 # main
 if __name__ == "__main__":
