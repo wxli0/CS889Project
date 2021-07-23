@@ -159,7 +159,8 @@ def get_taxifig(selectedLocs):
                                         featureidkey="properties.LocationID",
                                         projection="mercator")
         taxiHighlights.update_traces(marker_line=dict(color="red", width=5))
-        taxifig.add_trace(taxiHighlights.data[0])
+        for i in range(len(taxiHighlights.data)):
+            taxifig.add_trace(taxiHighlights.data[i])
 
     taxifig.update_geos(fitbounds="locations", visible=False)
     taxifig.update_layout(
