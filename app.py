@@ -43,10 +43,6 @@ biv_colors = [  "#e8e8e8", "#b5c0da", "#6c83b5",
                 "#73ae80", "#5a9178", "#2a5a5b"]
 bivcmap = {clr : clr for clr in biv_colors}
 
-# assign random colors to data
-bivcolors = np.array([biv_colors[i % nbiv_colors] for i in range(len(taxidf))])
-taxidf["bivcolor"] = bivcolors
-
 def colors_to_colorscale(biv_colors):
     # biv_colors: list of n**2 color codes in hexa or RGB255
     # returns a discrete colorscale  defined by biv_colors
@@ -105,12 +101,12 @@ taxifig = px.choropleth(taxidf, geojson=taxigj,
 
 # bivariate legend
 legendHeight = legendWidth = 300
-text_x = ['p_ratio<P_33', 'P_33<=p_ratio<=P_66', 'p_ratio>P_66']
-text_y = ['h_ratio<P_33', 'P_33<=h_ratio<=P_66', 'h_ratio>P_66']
+text_x = ['yellow revenue<P_33', 'P_33<=yellow revenue<=P_66', 'yellow_revenue>P_66']
+text_y = ['green revenue<P_33', 'P_33<=green revenue<=P_66', 'green revenue>P_66']
 legend_axis = dict(showline=False, zeroline=False, showgrid=False,  ticks='', showticklabels=False)
 taxilegend = go.Figure(
                 data=colorsquare(text_x, text_y, colors_to_colorscale(biv_colors)),
-                layout=dict(xaxis=dict(legend_axis, title="P_33, P66 are percentiles", side="top"),
+                layout=dict(xaxis=dict(legend_axis, title="P_33, P_66 are percentiles", side="top"),
                             yaxis=legend_axis,
                             height=legendHeight, width=legendWidth))
 
