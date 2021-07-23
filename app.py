@@ -31,6 +31,7 @@ zip_lookup = {int(feature["properties"]["postalCode"]) : feature
 
 # covid data
 coviddf = pd.read_csv(covid_data_path + "covid_data-2020-3.csv")[:nzips]
+coviddf["str_zip_code"] = coviddf["zip_code"].apply("str")
 
 # zone overlap
 overlapdf = pd.read_csv(map_data_path + "taxi_zip_overlap.csv")
@@ -58,7 +59,7 @@ taxifig = px.choropleth(taxidf, geojson=taxigj,
                                 "green_log_total_amount" : False},
                             featureidkey="properties.LocationID", projection="mercator")
 
-coviddf["str_zip_code"] = coviddf["zip_code"].astype("str")
+# coviddf["str_zip_code"] = coviddf["zip_code"].apply(str)
 cmap = {str_zip_code : "red" for str_zip_code in coviddf["str_zip_code"]} # assign all to red
 covidfig = px.choropleth(coviddf, geojson=covidgj,
                             locations="zip_code",
