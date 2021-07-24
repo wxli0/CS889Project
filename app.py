@@ -168,7 +168,7 @@ def get_taxifig(selectedLocs):
 
     taxifig.update_geos(fitbounds="locations", visible=False)
     taxifig.update_layout(
-        mapbox_style="open-street-map",
+        mapbox_style="carto-positron",
         margin={"r":0,"t":0,"l":0,"b":0},
         height=choroplethHeight,
         showlegend=False)
@@ -197,7 +197,7 @@ def get_covidfig(selectedZips):
 
     covidfig.update_geos(fitbounds="locations", visible=False)
     covidfig.update_layout(
-        mapbox_style="open-street-map",
+        mapbox_style="carto-positron",
         margin={"r":0,"t":0,"l":0,"b":0},
         height=choroplethHeight)
 
