@@ -85,7 +85,7 @@ app = dash.Dash(
 
 # figures
 choroplethHeight = 600
-taxifig = px.choropleth(taxidf, geojson=taxigj,
+taxifig = px.choropleth_mapbox(taxidf, geojson=taxigj,
                             locations="PULocationID", color="bivcolor",
                             color_discrete_map=bivcmap,
                             hover_name="Zone",
@@ -97,7 +97,8 @@ taxifig = px.choropleth(taxidf, geojson=taxigj,
                                 "yellow_log_total_amount" : False,
                                 "green_log_total_amount" : False,
                                 "bivcolor" : False},
-                            featureidkey="properties.LocationID", projection="mercator")
+                            featureidkey="properties.LocationID",
+                            center={"lat":40.7, "lon":-73.97}, zoom=9.5)
 
 # bivariate legend
 legendHeight = legendWidth = 300
@@ -110,14 +111,16 @@ taxilegend = go.Figure(
                             yaxis=legend_axis,
                             height=legendHeight, width=legendWidth))
 
-covidfig = px.choropleth(coviddf, geojson=covidgj,
+covidfig = px.choropleth_mapbox(coviddf, geojson=covidgj,
                             locations="zip_code", color="hospitalization_rate",
                             color_continuous_scale="Viridis",
                             hover_name="zip_code",
                             hover_data={
                                 "hospitalization_rate" : ":.2f",
                                 "zip_code" : False},
-                            featureidkey="properties.postalCode", projection="mercator")
+                            featureidkey="properties.postalCode",
+                            center={"lat":40.7, "lon":-73.97},
+                            zoom=9.5)
 
 dummy_df = pd.DataFrame({
     "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
@@ -143,7 +146,7 @@ def get_taxifig(selectedLocs):
 
     if (len(selectedLocs) > 0):
         highlights = get_highlights(selectedLocs, taxigj, taxi_lookup)
-        taxiHighlights = px.choropleth(taxidf.loc[taxidf["PULocationID"].isin(selectedLocs)],
+        taxiHighlights = px.choropleth_mapbox(taxidf.loc[taxidf["PULocationID"].isin(selectedLocs)],
                                         geojson=highlights,
                                         locations="PULocationID", color="bivcolor",
                                         color_discrete_map=bivcmap,
@@ -157,13 +160,15 @@ def get_taxifig(selectedLocs):
                                             "green_log_total_amount" : False,
                                             "bivcolor" : False},
                                         featureidkey="properties.LocationID",
-                                        projection="mercator")
+                                        center={"lat":40.7, "lon":-73.97},
+                                        zoom=9.5)
         taxiHighlights.update_traces(marker_line=dict(color="red", width=5))
         for i in range(len(taxiHighlights.data)):
             taxifig.add_trace(taxiHighlights.data[i])
 
     taxifig.update_geos(fitbounds="locations", visible=False)
     taxifig.update_layout(
+        mapbox_style="open-street-map",
         margin={"r":0,"t":0,"l":0,"b":0},
         height=choroplethHeight,
         showlegend=False)
@@ -176,7 +181,7 @@ def get_covidfig(selectedZips):
 
     if (len(selectedZips) > 0):
         highlights = get_highlights(selectedZips, covidgj, zip_lookup)
-        covidHighlights = px.choropleth(coviddf.loc[coviddf["zip_code"].isin(selectedZips)],
+        covidHighlights = px.choropleth_mapbox(coviddf.loc[coviddf["zip_code"].isin(selectedZips)],
                                         geojson=highlights,
                                         locations="zip_code", color="hospitalization_rate",
                                         color_continuous_scale="Viridis",
@@ -185,12 +190,16 @@ def get_covidfig(selectedZips):
                                             "hospitalization_rate" : ":.2f",
                                             "zip_code" : False},
                                         featureidkey="properties.postalCode",
-                                        projection="mercator")
+                                        center={"lat":40.7, "lon":-73.97},
+                                        zoom=9.5)
         covidHighlights.update_traces(marker_line=dict(color="red", width=5))
         covidfig.add_trace(covidHighlights.data[0])
 
     covidfig.update_geos(fitbounds="locations", visible=False)
-    covidfig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, height=choroplethHeight)
+    covidfig.update_layout(
+        mapbox_style="open-street-map",
+        margin={"r":0,"t":0,"l":0,"b":0},
+        height=choroplethHeight)
 
     return covidfig
 
