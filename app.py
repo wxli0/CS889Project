@@ -121,7 +121,7 @@ covidfig = px.choropleth_mapbox(coviddf, geojson=covidgj,
                             featureidkey="properties.postalCode",
                             center={"lat":40.7, "lon":-73.97},
                             zoom=9.5)
-
+                        
 dummy_df = pd.DataFrame({
     "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
     "Amount": [4, 1, 2, 2, 4, 5],
@@ -203,6 +203,18 @@ def get_covidfig(selectedZips):
 
     return covidfig
 
+def get_covid_drilldown(selectedZips):
+    if (len(selectedZips) > 0):
+        df = pd.read_csv(covid_data_path + "processed_data.csv", parse_dates=["date"])
+        mask = df["zip_code"].isin(selectedZips)
+        covid_drilldown = px.line(df[mask], x='date', y='hospitalization_rate', line_group = 'zip_code', color='zip_code', hover_name="zip_code")
+        return covid_drilldown
+    return dash.no_update
+        
+
+def get_taxi_drilldown(selectedLocs):
+    return dummy_fig
+
 # layout
 app.layout = html.Div([
     html.Div([ 
@@ -222,14 +234,12 @@ app.layout = html.Div([
 
     html.Div([ 
         html.Div([
-            dcc.Graph(id='example-graph_1',
-            figure=dummy_fig)
-        ], className="six columns"),
+            dcc.Graph(id='covid-drilldown'),
+        ], className="five columns"),
 
         html.Div([
-            dcc.Graph(id='example-graph_2',
-            figure=dummy_fig)
-        ], className="six columns"),
+            dcc.Graph(id='taxi-drilldown'),
+        ], className="five columns"),
     ], className="row", id="drilldown", style= {'display': 'block'})
 ])
 
@@ -280,6 +290,45 @@ def update_plots(covidClickData, taxiClickData, currentVisibility):
         newVisibility = "none"
 
     return get_covidfig(selectedZips), get_taxifig(selectedLocs), {"display": newVisibility}
+
+
+@app.callback([
+    Output("covid-drilldown", "figure"),
+    Output("taxi-drilldown", "figure"),
+], [
+    Input("covid-choropleth", "clickData"),
+    Input("taxi-choropleth", "clickData"),
+])
+def update_drilldowns(covidClickData, taxiClickData):
+    ctx = dash.callback_context
+    #ctx_msg = json.dumps({
+    #    'states': ctx.states,
+    #    'triggered': ctx.triggered,
+    #    'inputs': ctx.inputs
+    #}, indent=2)
+
+    # vars to be filled in
+    covidLocation = None
+    taxiLocation = None
+    selectedZips = []
+    selectedLocs = []
+
+    # figure out which map triggered the callback
+    if ctx.triggered[0]["prop_id"] == covidTriggerStr:
+        if covidClickData is not None:
+            covidLocation = covidClickData["points"][0]["location"]
+    elif ctx.triggered[0]["prop_id"] == taxiTriggerStr:
+        if taxiClickData is not None:
+            taxiLocation = taxiClickData["points"][0]["location"]
+
+    if covidLocation:
+        selectedZips = [covidLocation]
+        selectedLocs = list(overlapdf[overlapdf["zip_code"] == covidLocation]["LocationID"])
+    elif taxiLocation:
+        selectedLocs = [taxiLocation]
+        selectedZips = list(overlapdf[overlapdf["LocationID"] == taxiLocation]["zip_code"])
+
+    return get_covid_drilldown(selectedZips), get_taxi_drilldown(selectedLocs)
 
 # main
 if __name__ == "__main__":
