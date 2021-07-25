@@ -89,7 +89,7 @@ app = dash.Dash(
 )
 
 # figures
-choroplethHeight = 600
+choroplethHeight = 1300
 taxifig = px.choropleth_mapbox(taxidf, geojson=taxigj,
                             locations="PULocationID", color="bivcolor",
                             color_discrete_map=bivcmap,
@@ -104,10 +104,10 @@ taxifig = px.choropleth_mapbox(taxidf, geojson=taxigj,
                                 "bivcolor" : False},
                             # featureidkey="properties.LocationID",
                             featureidkey="properties.location_id",
-                            center={"lat":40.7, "lon":-73.97}, zoom=9.5)
+                            center={"lat":40.7, "lon":-73.97}, zoom=10.62)
 
 # bivariate legend
-legendHeight = legendWidth = 300
+legendHeight = legendWidth = 500
 text_x = ['yellow revenue<P_33', 'P_33<=yellow revenue<=P_66', 'yellow_revenue>P_66']
 text_y = ['green revenue<P_33', 'P_33<=green revenue<=P_66', 'green revenue>P_66']
 legend_axis = dict(showline=False, zeroline=False, showgrid=False,  ticks='', showticklabels=False)
@@ -116,6 +116,30 @@ taxilegend = go.Figure(
                 layout=dict(xaxis=dict(legend_axis, title="P_33, P_66 are percentiles", side="top"),
                             yaxis=legend_axis,
                             height=legendHeight, width=legendWidth))
+taxilegend.update_xaxes(
+        tickangle = 90,
+        title_text = "yellow taxi revenue",
+        title_font = {"size": 15},
+        title_standoff = 25,
+        showline=True, 
+        linewidth=2, 
+        linecolor='black', 
+        ticks="inside", 
+        ticktext=["0", "33rd", "66th", "100th"], 
+        tickvals=[-0.5, 0.5, 1.5, 2.5], 
+        showticklabels=True)
+taxilegend.update_yaxes(
+        tickangle = 0,
+        title_text = "green taxi revenue",
+        title_font = {"size": 15},
+        title_standoff = 25,
+        showline=True, 
+        linewidth=2, 
+        linecolor='black', 
+        ticks="inside", 
+        ticktext=["0", "33rd", "66th", "100th"], 
+        tickvals=[-0.5, 0.5, 1.5, 2.5], 
+        showticklabels=True)
 
 covidfig = px.choropleth_mapbox(coviddf, geojson=covidgj,
                             locations="zip_code", color="hospitalization_rate",
@@ -126,7 +150,7 @@ covidfig = px.choropleth_mapbox(coviddf, geojson=covidgj,
                                 "zip_code" : False},
                             featureidkey="properties.postalCode",
                             center={"lat":40.7, "lon":-73.97},
-                            zoom=9.5)
+                            zoom=10.62)
                         
 dummy_df = pd.DataFrame({
     "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
@@ -167,8 +191,7 @@ def get_taxifig(selectedLocs):
                                             "bivcolor" : False},
                                         # featureidkey="properties.LocationID",
                                         featureidkey="properties.location_id",
-                                        center={"lat":40.7, "lon":-73.97},
-                                        zoom=9.5)
+                                        center={"lat":40.7, "lon":-73.97})
         taxiHighlights.update_traces(marker_line=dict(color="red", width=5))
         for i in range(len(taxiHighlights.data)):
             taxifig.add_trace(taxiHighlights.data[i])
@@ -197,8 +220,7 @@ def get_covidfig(selectedZips):
                                             "hospitalization_rate" : ":.2f",
                                             "zip_code" : False},
                                         featureidkey="properties.postalCode",
-                                        center={"lat":40.7, "lon":-73.97},
-                                        zoom=9.5)
+                                        center={"lat":40.7, "lon":-73.97})
         covidHighlights.update_traces(marker_line=dict(color="red", width=5))
         covidfig.add_trace(covidHighlights.data[0])
 
