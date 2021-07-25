@@ -14,10 +14,15 @@ covid_data_path = "covid_data/"
 taxi_data_path = "taxi_data/"
 
 # taxi zones
-with open(map_data_path + "taxi_zones.geojson") as f:
+# with open(map_data_path + "taxi_zones.geojson") as f:
+#     taxigj = geojson.load(f)
+# nzones = len(taxigj["features"])
+# taxi_lookup = {int(feature["properties"]["LocationID"]) : feature
+#                 for feature in taxigj["features"]}
+with open(map_data_path + "taxi_zones_2_simpler.json") as f:
     taxigj = geojson.load(f)
 nzones = len(taxigj["features"])
-taxi_lookup = {int(feature["properties"]["LocationID"]) : feature
+taxi_lookup = {int(feature["properties"]["location_id"]) : feature
                 for feature in taxigj["features"]}
 
 # taxi data
@@ -97,7 +102,8 @@ taxifig = px.choropleth_mapbox(taxidf, geojson=taxigj,
                                 "yellow_log_total_amount" : False,
                                 "green_log_total_amount" : False,
                                 "bivcolor" : False},
-                            featureidkey="properties.LocationID",
+                            # featureidkey="properties.LocationID",
+                            featureidkey="properties.location_id",
                             center={"lat":40.7, "lon":-73.97}, zoom=9.5)
 
 # bivariate legend
@@ -159,7 +165,8 @@ def get_taxifig(selectedLocs):
                                             "yellow_log_total_amount" : False,
                                             "green_log_total_amount" : False,
                                             "bivcolor" : False},
-                                        featureidkey="properties.LocationID",
+                                        # featureidkey="properties.LocationID",
+                                        featureidkey="properties.location_id",
                                         center={"lat":40.7, "lon":-73.97},
                                         zoom=9.5)
         taxiHighlights.update_traces(marker_line=dict(color="red", width=5))
@@ -256,7 +263,7 @@ taxiTriggerStr = "taxi-choropleth.clickData"
     Input("taxi-choropleth", "clickData"),
     Input("drilldown", "style")])
 def update_plots(covidClickData, taxiClickData, currentVisibility):
-    print(currentVisibility)
+    # print(currentVisibility)
     ctx = dash.callback_context
     #ctx_msg = json.dumps({
     #    'states': ctx.states,
@@ -332,4 +339,4 @@ def update_drilldowns(covidClickData, taxiClickData):
 
 # main
 if __name__ == "__main__":
-    app.run_server(debug=False)
+    app.run_server(debug=True)
