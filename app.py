@@ -226,10 +226,24 @@ def get_taxi_drilldown(selectedLocs):
 app.layout = html.Div([
     html.Div([ 
         html.Div([
+            html.H1(
+                children='COVID coloropleth',
+                style={
+                    'textAlign': 'center',
+                    'color': 'black'
+                }
+            ),
             dcc.Graph(id="covid-choropleth")
         ], className="five columns"),
 
         html.Div([
+            html.H1(
+                children='taxi coloropleth',
+                style={
+                    'textAlign': 'center',
+                    'color': 'black'
+                }
+            ),
             dcc.Graph(id="taxi-choropleth")
         ], className="five columns"),
 
@@ -241,10 +255,24 @@ app.layout = html.Div([
 
     html.Div([ 
         html.Div([
+            html.H1(
+                children='COVID drilldown',
+                style={
+                    'textAlign': 'center',
+                    'color': 'black'
+                }
+            ),
             dcc.Graph(id='covid-drilldown'),
         ], className="five columns"),
 
         html.Div([
+            html.H1(
+                children='taxi drilldown',
+                style={
+                    'textAlign': 'center',
+                    'color': 'black'
+                }
+            ),
             dcc.Graph(id='taxi-drilldown'),
         ], className="five columns"),
     ], className="row", id="drilldown", style= {'display': 'block'})
