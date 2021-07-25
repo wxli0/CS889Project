@@ -227,7 +227,7 @@ app.layout = html.Div([
     html.Div([ 
         html.Div([
             html.H1(
-                children='COVID coloropleth',
+                children='COVID choropleth',
                 style={
                     'textAlign': 'center',
                     'color': 'black'
@@ -238,7 +238,7 @@ app.layout = html.Div([
 
         html.Div([
             html.H1(
-                children='taxi coloropleth',
+                children='taxi choropleth',
                 style={
                     'textAlign': 'center',
                     'color': 'black'
