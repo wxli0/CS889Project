@@ -114,7 +114,7 @@ text_y = ['green revenue<P_33', 'P_33<=green revenue<=P_66', 'green revenue>P_66
 legend_axis = dict(showline=False, zeroline=False, showgrid=False,  ticks='', showticklabels=False)
 taxilegend = go.Figure(
                 data=colorsquare(text_x, text_y, colors_to_colorscale(biv_colors)),
-                layout=dict(xaxis=dict(legend_axis, title="P_33, P_66 are percentiles", side="top"),
+                layout=dict(xaxis=dict(legend_axis, side="bottom"),
                             yaxis=legend_axis,
                             height=legendHeight, width=legendWidth))
 taxilegend.update_xaxes(
@@ -126,8 +126,8 @@ taxilegend.update_xaxes(
         linewidth=2, 
         linecolor='black', 
         ticks="inside", 
-        ticktext=["0", "33rd", "66th", "100th"], 
-        tickvals=[-0.5, 0.5, 1.5, 2.5], 
+        ticktext=["33rd", "66th", "100th"],
+        tickvals=[0.5, 1.5, 2.5],
         showticklabels=True)
 taxilegend.update_yaxes(
         tickangle = 0,
@@ -250,7 +250,7 @@ app.layout = html.Div([
     html.Div([ 
         html.Div([
             html.H1(
-                children='COVID choropleth',
+                children='COVID-19 Choropleth',
                 style={
                     'textAlign': 'center',
                     'color': 'black'
@@ -261,7 +261,7 @@ app.layout = html.Div([
 
         html.Div([
             html.H1(
-                children='taxi choropleth',
+                children='Taxi Choropleth',
                 style={
                     'textAlign': 'center',
                     'color': 'black'
@@ -279,7 +279,7 @@ app.layout = html.Div([
     html.Div([ 
         html.Div([
             html.H1(
-                children='COVID drilldown',
+                children='COVID-19 Drilldown',
                 style={
                     'textAlign': 'center',
                     'color': 'black'
@@ -290,7 +290,7 @@ app.layout = html.Div([
 
         html.Div([
             html.H1(
-                children='taxi drilldown',
+                children='Taxi Drilldown',
                 style={
                     'textAlign': 'center',
                     'color': 'black'
