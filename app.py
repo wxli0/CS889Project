@@ -14,11 +14,6 @@ covid_data_path = "covid_data/"
 taxi_data_path = "taxi_data/"
 
 # taxi zones
-# with open(map_data_path + "taxi_zones.geojson") as f:
-#     taxigj = geojson.load(f)
-# nzones = len(taxigj["features"])
-# taxi_lookup = {int(feature["properties"]["LocationID"]) : feature
-#                 for feature in taxigj["features"]}
 with open(map_data_path + "taxi_zones_2_simpler.json") as f:
     taxigj = geojson.load(f)
 nzones = len(taxigj["features"])
@@ -26,10 +21,9 @@ taxi_lookup = {int(feature["properties"]["location_id"]) : feature
                 for feature in taxigj["features"]}
 
 # taxi data
-taxidf = pd.read_csv(taxi_data_path + "taxi_data.csv")[:nzones]
+taxidf = pd.read_csv(taxi_data_path + "taxi_data_2020-3.csv")[:nzones]
 
 # covid zones (zip codes)
-# with open(map_data_path + "zip_codes.geojson") as f:
 with open(map_data_path + "zip_codes_simpler.json") as f:
     covidgj = geojson.load(f)
 nzips = len(covidgj["features"])
@@ -92,17 +86,18 @@ app = dash.Dash(
 # figures
 choroplethHeight = 1300
 taxifig = px.choropleth_mapbox(taxidf, geojson=taxigj,
-                            locations="PULocationID", color="bivcolor",
+                            locations="PULocationID", color="biv_ratio_color",
                             color_discrete_map=bivcmap,
                             hover_name="Zone",
                             hover_data={
                                 "yellow_total_amount": ":.2f",
                                 "green_total_amount" : ":.2f",
+                                "yellow_change_percent": ":.2f",
+                                "green_change_percent": ":.2f",
                                 "Borough" : True,
                                 "service_zone" : True,
-                                "yellow_log_total_amount" : False,
-                                "green_log_total_amount" : False,
-                                "bivcolor" : False},
+                                "biv_amount_color" : False,
+                                "biv_ratio_color" : False},
                             # featureidkey="properties.LocationID",
                             featureidkey="properties.location_id",
                             center={"lat":40.7, "lon":-73.97}, zoom=10.62)
@@ -179,17 +174,18 @@ def get_taxifig(selectedLocs):
         highlights = get_highlights(selectedLocs, taxigj, taxi_lookup)
         taxiHighlights = px.choropleth_mapbox(taxidf.loc[taxidf["PULocationID"].isin(selectedLocs)],
                                         geojson=highlights,
-                                        locations="PULocationID", color="bivcolor",
+                                        locations="PULocationID", color="biv_ratio_color",
                                         color_discrete_map=bivcmap,
                                         hover_name="Zone",
                                         hover_data={
                                             "yellow_total_amount": ":.2f",
                                             "green_total_amount" : ":.2f",
+                                            "yellow_change_percent": ":.2f",
+                                            "green_change_percent": ":.2f",
                                             "Borough" : True,
                                             "service_zone" : True,
-                                            "yellow_log_total_amount" : False,
-                                            "green_log_total_amount" : False,
-                                            "bivcolor" : False},
+                                            "biv_amount_color" : False,
+                                            "biv_ratio_color" : False},
                                         # featureidkey="properties.LocationID",
                                         featureidkey="properties.location_id",
                                         center={"lat":40.7, "lon":-73.97})
