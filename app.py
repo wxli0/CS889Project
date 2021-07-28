@@ -21,7 +21,7 @@ taxi_lookup = {int(feature["properties"]["location_id"]) : feature
                 for feature in taxigj["features"]}
 
 # taxi data
-taxidf = pd.read_csv(taxi_data_path + "taxi_data_2020-3.csv")[:nzones]
+taxidf = pd.read_csv(taxi_data_path + "taxi_data_2020-03.csv")[:nzones]
 
 # covid zones (zip codes)
 with open(map_data_path + "zip_codes_simpler.json") as f:
