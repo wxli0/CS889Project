@@ -43,6 +43,44 @@ biv_colors = [  "#e8e8e8", "#b5c0da", "#6c83b5",
                 "#73ae80", "#5a9178", "#2a5a5b"]
 bivcmap = {clr : clr for clr in biv_colors}
 
+# slider marks
+ratio_marks = { 0  : {"label": "Jan."},
+                1  : {"label": "Feb."},
+                2  : {"label": "Mar."},
+                3  : {"label": "Apr."},
+                4  : {"label": "May"},
+                5  : {"label": "Jun."},
+                6  : {"label": "Jul."},
+                7  : {"label": "Aug."},
+                8  : {"label": "Sep."},
+                9  : {"label": "Oct."},
+                10 : {"label": "Nov."},
+                11 : {"label": "Dec."},}
+rawrevenue_marks = {0  : {"label": "2019", "style":{"color": "#77b0b1"}},
+                    1  : {"label": "Feb."},
+                    2  : {"label": "Mar."},
+                    3  : {"label": "Apr."},
+                    4  : {"label": "May"},
+                    5  : {"label": "Jun."},
+                    6  : {"label": "Jul."},
+                    7  : {"label": "Aug."},
+                    8  : {"label": "Sep."},
+                    9  : {"label": "Oct."},
+                    10 : {"label": "Nov."},
+                    11 : {"label": "Dec."},
+                    12 : {"label": "2020", "style":{"color": "#77b0b1"}},
+                    13 : {"label": "Feb."},
+                    14 : {"label": "Mar."},
+                    15 : {"label": "Apr."},
+                    16 : {"label": "May"},
+                    17 : {"label": "Jun."},
+                    18 : {"label": "Jul."},
+                    19 : {"label": "Aug."},
+                    20 : {"label": "Sep."},
+                    21 : {"label": "Oct."},
+                    22 : {"label": "Nov."},
+                    23 : {"label": "Dec."},}
+
 def colors_to_colorscale(biv_colors):
     # biv_colors: list of n**2 color codes in hexa or RGB255
     # returns a discrete colorscale  defined by biv_colors
@@ -244,40 +282,21 @@ def get_taxi_drilldown(selectedLocs):
 # layout
 app.layout = html.Div([
     html.Div([
-        dcc.Slider(
-            id='my-slider',
-            min=0,
-            max=23,
-            step=None,
-            marks={
-                0  : {"label": "2019", "style":{"color": "#77b0b1"}},
-                1  : {"label": "Feb."},
-                2  : {"label": "Mar."},
-                3  : {"label": "Apr."},
-                4  : {"label": "May"},
-                5  : {"label": "Jun."},
-                6  : {"label": "Jul."},
-                7  : {"label": "Aug."},
-                8  : {"label": "Sep."},
-                9  : {"label": "Oct."},
-                10 : {"label": "Nov."},
-                11 : {"label": "Dec."},
-                12 : {"label": "2020", "style":{"color": "#77b0b1"}},
-                13 : {"label": "Feb."},
-                14 : {"label": "Mar."},
-                15 : {"label": "Apr."},
-                16 : {"label": "May"},
-                17 : {"label": "Jun."},
-                18 : {"label": "Jul."},
-                19 : {"label": "Aug."},
-                20 : {"label": "Sep."},
-                21 : {"label": "Oct."},
-                22 : {"label": "Nov."},
-                23 : {"label": "Dec."},
-            },
-            value=14,
-            included=False,
-        ),]),
+        html.Div([
+            dcc.Slider(
+                id='month-slider',
+                min=0,
+                max=11,
+                step=None,
+                marks=ratio_marks,
+                value=0,
+                included=False,
+        )], className="ten columns"),
+
+        html.Div([
+            html.Button('Ratio view', id='btn-change-view', n_clicks=0),
+        ]),
+    ]),
 
     html.Div([ 
         html.Div([
@@ -330,12 +349,34 @@ app.layout = html.Div([
             ),
             dcc.Graph(id='taxi-drilldown'),
         ], className="five columns"),
-    ], className="row", id="drilldown", style= {'display': 'block'})
+    ], className="row", id="drilldown", style= {'display': 'block'}),
+
+    dcc.Store("current-dataframe")
 ])
 
 # interactions
 covidTriggerStr = "covid-choropleth.clickData"
 taxiTriggerStr = "taxi-choropleth.clickData"
+
+@app.callback([
+    Output("btn-change-view", "children"),
+    Output("month-slider", "max"),
+    Output("month-slider", "marks"),
+    Output("month-slider", "value"),
+], [
+    Input("btn-change-view", "n_clicks"),
+])
+def update_slider_view(n_clicks):
+    if (n_clicks % 2):
+        return "Raw Revenue View", 23, rawrevenue_marks, 12
+    else:
+        return "Ratio View", 11, ratio_marks, 0
+
+@app.callback(
+    Output("current-dataframe", "data"),
+    Input("month-slider", "value"))
+def update_current_dataframe(value):
+    return taxidf.to_json()
 
 @app.callback([
     Output("covid-choropleth", "figure"),
@@ -344,15 +385,16 @@ taxiTriggerStr = "taxi-choropleth.clickData"
 ], [
     Input("covid-choropleth", "clickData"),
     Input("taxi-choropleth", "clickData"),
+    Input("current-dataframe", "data"),
     Input("drilldown", "style")])
-def update_plots(covidClickData, taxiClickData, currentVisibility):
-    # print(currentVisibility)
+def update_plots(covidClickData, taxiClickData, df, currentVisibility):
     ctx = dash.callback_context
     #ctx_msg = json.dumps({
     #    'states': ctx.states,
     #    'triggered': ctx.triggered,
     #    'inputs': ctx.inputs
     #}, indent=2)
+    #print(pd.DataFrame.from_dict(json.loads(df)))
 
     # vars to be filled in
     covidLocation = None
