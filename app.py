@@ -243,6 +243,42 @@ def get_taxi_drilldown(selectedLocs):
 
 # layout
 app.layout = html.Div([
+    html.Div([
+        dcc.Slider(
+            id='my-slider',
+            min=0,
+            max=23,
+            step=None,
+            marks={
+                0  : {"label": "2019", "style":{"color": "#77b0b1"}},
+                1  : {"label": "Feb."},
+                2  : {"label": "Mar."},
+                3  : {"label": "Apr."},
+                4  : {"label": "May"},
+                5  : {"label": "Jun."},
+                6  : {"label": "Jul."},
+                7  : {"label": "Aug."},
+                8  : {"label": "Sep."},
+                9  : {"label": "Oct."},
+                10 : {"label": "Nov."},
+                11 : {"label": "Dec."},
+                12 : {"label": "2020", "style":{"color": "#77b0b1"}},
+                13 : {"label": "Feb."},
+                14 : {"label": "Mar."},
+                15 : {"label": "Apr."},
+                16 : {"label": "May"},
+                17 : {"label": "Jun."},
+                18 : {"label": "Jul."},
+                19 : {"label": "Aug."},
+                20 : {"label": "Sep."},
+                21 : {"label": "Oct."},
+                22 : {"label": "Nov."},
+                23 : {"label": "Dec."},
+            },
+            value=14,
+            included=False,
+        ),]),
+
     html.Div([ 
         html.Div([
             html.H1(
