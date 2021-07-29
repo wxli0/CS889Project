@@ -12,6 +12,7 @@ import plotly.graph_objs as go
 map_data_path = "map_data/"
 covid_data_path = "covid_data/"
 taxi_data_path = "taxi_data/"
+taxi_zone_path = "taxi_data/by_zone/"
 
 # taxi zones
 with open(map_data_path + "taxi_zones_2_simpler.json") as f:
@@ -239,7 +240,16 @@ def get_covid_drilldown(selectedZips):
         
 
 def get_taxi_drilldown(selectedLocs):
-    return dummy_fig
+    if (len(selectedLocs) == 0):
+        return dash.no_update
+    taxi_zone_data = []
+    print(selectedLocs)
+    for location_id in selectedLocs:
+        df = pd.read_csv(taxi_zone_path + "taxi_data_"+str(location_id)+".csv")
+        taxi_zone_data.append(df)
+    all_data = pd.concat(taxi_zone_data)
+    taxi_drilldown = px.line(df, x='date', y='total_cost', color='taxi_type', line_group='zone_name', hover_name='zone_name')
+    return taxi_drilldown
 
 # layout
 app.layout = html.Div([
