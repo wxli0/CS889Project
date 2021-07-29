@@ -39,6 +39,10 @@ zip_lookup = {int(feature["properties"]["postalCode"]) : feature
 
 # covid data
 coviddf = pd.read_csv(covid_data_path + "covid_data-2020-3.csv")[:nzips]
+coviddfMonths = []
+for monthID in range(1, 13):
+    dfmonth = pd.read_csv(covid_data_path + "covid_data-2020-" + str(monthID) + ".csv")
+    coviddfMonths.append(dfmonth)
 
 # zone overlap
 overlapdf = pd.read_csv(map_data_path + "taxi_zip_overlap.csv")
@@ -200,17 +204,6 @@ taxilegend.update_yaxes(
         tickvals=[-0.5, 0.5, 1.5, 2.5], 
         showticklabels=True)
 
-covidfig = px.choropleth_mapbox(coviddf, geojson=covidgj,
-                            locations="zip_code", color="hospitalization_rate",
-                            color_continuous_scale="Viridis",
-                            hover_name="zip_code",
-                            hover_data={
-                                "hospitalization_rate" : ":.2f",
-                                "zip_code" : False},
-                            featureidkey="properties.postalCode",
-                            center={"lat":40.7, "lon":-73.97},
-                            zoom=10.62)
-                        
 dummy_df = pd.DataFrame({
     "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
     "Amount": [4, 1, 2, 2, 4, 5],
@@ -262,13 +255,22 @@ def get_taxifig(selectedLocs, tdf, hover_data, coloring):
 
     return taxifig
             
-def get_covidfig(selectedZips):
+def get_covidfig(selectedZips, cdf):
     # clear traces
-    covidfig.data = [covidfig.data[0]]
+    covidfig = px.choropleth_mapbox(cdf, geojson=covidgj,
+                            locations="zip_code", color="hospitalization_rate",
+                            color_continuous_scale="Viridis",
+                            hover_name="zip_code",
+                            hover_data={
+                                "hospitalization_rate" : ":.2f",
+                                "zip_code" : False},
+                            featureidkey="properties.postalCode",
+                            center={"lat":40.7, "lon":-73.97},
+                            zoom=10.62)
 
     if (len(selectedZips) > 0):
         highlights = get_highlights(selectedZips, covidgj, zip_lookup)
-        covidHighlights = px.choropleth_mapbox(coviddf.loc[coviddf["zip_code"].isin(selectedZips)],
+        covidHighlights = px.choropleth_mapbox(cdf.loc[cdf["zip_code"].isin(selectedZips)],
                                         geojson=highlights,
                                         locations="zip_code", color="hospitalization_rate",
                                         color_continuous_scale="Viridis",
@@ -413,6 +415,8 @@ def update_current_dataframe(value, isRatioView):
         if start == end:
             tdf = taxidfMonths[12 + end].copy()
             tdf.drop(columns=["biv_amount_color"], inplace=True)
+
+            cdf = coviddfMonths[end].copy()
         else:
             tdf2020 = taxidfMonths[12 + end].copy()
             tdf2019 = taxidfMonths[end].copy()
@@ -443,6 +447,11 @@ def update_current_dataframe(value, isRatioView):
             tdf = tdf2020
             tdf.drop(columns=["biv_amount_color"], inplace=True)
 
+            cdf = coviddfMonths[end].copy()
+            for i in range(start, end):
+                cdf["hospitalization_rate"] += coviddfMonths[i]["hospitalization_rate"]
+            cdf["hospitalization_rate"] /= (end - start + 1)
+
         hover_data = {"yellow_total_amount": ":.2f",
                         "green_total_amount" : ":.2f",
                         "yellow_change_percent" : ":.2f",
@@ -456,9 +465,16 @@ def update_current_dataframe(value, isRatioView):
         if start == end:
             tdf = taxidfMonths[end].copy()
             if (end >= 12):
+                # 2020
                 tdf.drop(columns=["yellow_change_percent", \
                                     "green_change_percent", \
                                     "biv_ratio_color"], inplace=True)
+
+                cdf = coviddfMonths[end - 12].copy()
+            else:
+                # 2019
+                cdf = coviddfMonths[0].copy()
+                cdf["hospitalization_rate"] = 0
         else:
             tdf = taxidfMonths[end].copy()
             for i in range(start, end):
@@ -478,9 +494,21 @@ def update_current_dataframe(value, isRatioView):
             tdf["biv_amount_color"] = colors
             tdf.drop(columns=["yellow_log_total_amount", "green_log_total_amount"], inplace=True)
             if (end >= 12):
+                # 2020
                 tdf.drop(columns=["yellow_change_percent", \
                                     "green_change_percent", \
                                     "biv_ratio_color"], inplace=True)
+
+                cdf = coviddfMonths[end - 12].copy()
+            else:
+                # 2019
+                cdf = coviddfMonths[0].copy()
+                cdf["hospitalization_rate"] = 0
+
+            for i in range(start, end):
+                if i >= 12:
+                    cdf["hospitalization_rate"] += coviddfMonths[i - 12]["hospitalization_rate"]
+            cdf["hospitalization_rate"] /= (end - start + 1)
 
         hover_data = {"yellow_total_amount": ":.2f",
                         "green_total_amount" : ":.2f",
@@ -489,21 +517,19 @@ def update_current_dataframe(value, isRatioView):
                         "biv_amount_color" : False}
         coloring = "biv_amount_color"
 
-    return coviddf.to_json(), tdf.to_json(), hover_data, coloring
+    return cdf.to_json(), tdf.to_json(), hover_data, coloring
 
 @app.callback([
     Output("covid-choropleth", "figure"),
     Output("taxi-choropleth", "figure"),
-    Output("drilldown", "style")
 ], [
     Input("covid-choropleth", "clickData"),
     Input("taxi-choropleth", "clickData"),
     Input("current-coviddf", "data"),
     Input("current-taxidf", "data"),
     Input("current-hover-formatting", "data"),
-    Input("current-coloring", "data"),
-    Input("drilldown", "style")])
-def update_plots(covidClickData, taxiClickData, cdf, tdf, hover_data, coloring, currentVisibility):
+    Input("current-coloring", "data"),])
+def update_plots(covidClickData, taxiClickData, cdf, tdf, hover_data, coloring):
     ctx = dash.callback_context
     #ctx_msg = json.dumps({
     #    'states': ctx.states,
@@ -511,6 +537,7 @@ def update_plots(covidClickData, taxiClickData, cdf, tdf, hover_data, coloring, 
     #    'inputs': ctx.inputs
     #}, indent=2)
     taxidata = pd.DataFrame.from_dict(json.loads(tdf))
+    coviddata = pd.DataFrame.from_dict(json.loads(cdf))
 
     # vars to be filled in
     covidLocation = None
@@ -533,13 +560,8 @@ def update_plots(covidClickData, taxiClickData, cdf, tdf, hover_data, coloring, 
         selectedLocs = [taxiLocation]
         selectedZips = list(overlapdf[overlapdf["LocationID"] == taxiLocation]["zip_code"])
 
-    newVisibility = "block"
-    if currentVisibility["display"] == "block":
-        newVisibility = "none"
-
-    return get_covidfig(selectedZips), \
-            get_taxifig(selectedLocs, taxidata, hover_data, coloring), \
-            {"display": newVisibility}
+    return get_covidfig(selectedZips, coviddata), \
+            get_taxifig(selectedLocs, taxidata, hover_data, coloring)
 
 
 @app.callback([
