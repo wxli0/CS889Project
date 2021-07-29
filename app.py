@@ -227,8 +227,11 @@ def get_highlights(selections, geojson, lookup_dict):
 def get_taxifig(selectedLocs, tdf, hover_data, coloring):
     # clear traces
     taxifig = px.choropleth_mapbox(tdf, geojson=taxigj,
-                            locations="PULocationID", color=coloring,
-                            color_discrete_map=bivcmap,
+                            locations="PULocationID", 
+                            # color=coloring,
+                            
+                            color="green_change_percent",
+                            color_continuous_scale="Viridis",
                             hover_name="Zone",
                             hover_data=hover_data,
                             featureidkey="properties.location_id",
