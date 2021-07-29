@@ -339,7 +339,13 @@ def get_taxi_drilldown(selectedLocs, start, end, isRatio):
         taxi_zone_data.append(df)
     all_data = pd.concat(taxi_zone_data)
     mask = all_data['date'].isin(dates)
-    taxi_drilldown = px.bar(all_data[mask], x='date', y='total_cost', barmode='group', color='zone_name')
+
+    taxi_drilldown = None
+    ctx = dash.callback_context
+    if ctx.triggered[0]["prop_id"] == covidTriggerStr:
+        taxi_drilldown = px.bar(all_data[mask], x='date', y='total_cost', barmode='group', color='zone_name')
+    elif ctx.triggered[0]["prop_id"] == taxiTriggerStr:
+        taxi_drilldown = px.bar(all_data[mask], x='date', y='total_cost', barmode='group', color='taxi_type')
     return taxi_drilldown
 
 # layout
