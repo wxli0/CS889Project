@@ -8,6 +8,9 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 import plotly.express as px
 import plotly.graph_objs as go
+
+import datetime
+from dateutil.relativedelta import *
    
 map_data_path = "map_data/"
 covid_data_path = "covid_data/"
@@ -290,25 +293,53 @@ def get_covidfig(selectedZips, cdf):
 
     return covidfig
 
-def get_covid_drilldown(selectedZips):
-    if (len(selectedZips) > 0):
-        df = pd.read_csv(covid_data_path + "processed_data.csv", parse_dates=["date"])
-        mask = df["zip_code"].isin(selectedZips)
-        covid_drilldown = px.line(df[mask], x='date', y='hospitalization_rate', line_group = 'zip_code', color='zip_code', hover_name="zip_code")
-        return covid_drilldown
-    return dash.no_update
+def compute_dates(start, end, isRatio):
+    if not isRatio:
+        startDate = datetime.datetime(2019, 1, 1)+relativedelta(months=+start)
+        endDate = datetime.datetime(2019, 1, 1) + relativedelta(months=+end)
+        dates = []
+        while startDate <= endDate:
+            dates.append(startDate)
+            startDate = startDate + relativedelta(months=+1)
+        return dates
+    else:
+        startDate = datetime.datetime(2019, 1, 1)+relativedelta(months=+start)
+        endDate = datetime.datetime(2019, 1, 1) + relativedelta(months=+end)
+        dates = []
+        while startDate <= endDate:
+            dates.append(startDate)
+            startDate = startDate + relativedelta(months=+1)
+        startDate = datetime.datetime(2020, 1, 1)+relativedelta(months=+start)
+        endDate = datetime.datetime(2020, 1, 1) + relativedelta(months=+end)
+        while startDate <= endDate:
+            dates.append(startDate)
+            startDate = startDate + relativedelta(months=+1)
+        return dates
+
+
+def get_covid_drilldown(selectedZips, start, end, isRatio):
+    if (len(selectedZips) == 0):
+        return dash.no_update
+    dates = compute_dates(start, end, isRatio)
+    df = pd.read_csv(covid_data_path + "processed_data.csv", parse_dates=["date"])
+    time_mask = df['date'].isin(dates)
+    location_mask = df["zip_code"].isin(selectedZips) 
+    mask = time_mask & location_mask
+    covid_drilldown = px.line(df[mask], x='date', y='hospitalization_rate', line_group = 'zip_code', color='zip_code', hover_name="zip_code")
+    return covid_drilldown
         
 
-def get_taxi_drilldown(selectedLocs):
+def get_taxi_drilldown(selectedLocs, start, end, isRatio):
     if (len(selectedLocs) == 0):
         return dash.no_update
     taxi_zone_data = []
-    print(selectedLocs)
+    dates = compute_dates(start, end, isRatio)
     for location_id in selectedLocs:
-        df = pd.read_csv(taxi_zone_path + "taxi_data_"+str(location_id)+".csv")
+        df = pd.read_csv(taxi_zone_path + "taxi_data_"+str(location_id)+".csv", parse_dates=['date'])
         taxi_zone_data.append(df)
     all_data = pd.concat(taxi_zone_data)
-    taxi_drilldown = px.line(df, x='date', y='total_cost', color='taxi_type', line_group='zone_name', hover_name='zone_name')
+    mask = all_data['date'].isin(dates)
+    taxi_drilldown = px.bar(all_data[mask], x='date', y='total_cost', barmode='group', color='zone_name')
     return taxi_drilldown
 
 # layout
@@ -578,14 +609,19 @@ def update_plots(covidClickData, taxiClickData, cdf, tdf, hover_data, coloring):
 ], [
     Input("covid-choropleth", "clickData"),
     Input("taxi-choropleth", "clickData"),
+    Input("month-slider", "value"),
+    Input("is-ratio-view", "data"),
 ])
-def update_drilldowns(covidClickData, taxiClickData):
+def update_drilldowns(covidClickData, taxiClickData, value, isRatio):
     ctx = dash.callback_context
-    #ctx_msg = json.dumps({
-    #    'states': ctx.states,
-    #    'triggered': ctx.triggered,
-    #    'inputs': ctx.inputs
-    #}, indent=2)
+
+    start, end = value
+    if start == end and isRatio:
+        start = 0
+        end = 12
+    if start == end and not isRatio:
+        start = 0
+        end = 24
 
     # vars to be filled in
     covidLocation = None
@@ -608,7 +644,7 @@ def update_drilldowns(covidClickData, taxiClickData):
         selectedLocs = [taxiLocation]
         selectedZips = list(overlapdf[overlapdf["LocationID"] == taxiLocation]["zip_code"])
 
-    return get_covid_drilldown(selectedZips), get_taxi_drilldown(selectedLocs)
+    return get_covid_drilldown(selectedZips, start, end, isRatio), get_taxi_drilldown(selectedLocs, start, end, isRatio)
 
 # main
 if __name__ == "__main__":
