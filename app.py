@@ -228,9 +228,7 @@ def get_taxifig(selectedLocs, tdf, hover_data, coloring):
     # clear traces
     taxifig = px.choropleth_mapbox(tdf, geojson=taxigj,
                             locations="PULocationID", 
-                            # color=coloring,
-                            
-                            color="green_change_percent",
+                            color="total_change_percent",
                             color_continuous_scale="Viridis",
                             hover_name="Zone",
                             hover_data=hover_data,
@@ -475,6 +473,11 @@ def update_current_dataframe(value, isRatioView):
                 (tdf2019["green_total_amount"] - tdf2020["green_total_amount"]) \
                             / tdf2019["green_total_amount"]}).replace([np.nan, np.inf, -np.inf], 0) \
                                 / (end - start + 1)
+            totalratio = pd.DataFrame({"ratio":\
+                (tdf2019["green_total_amount"] - tdf2020["green_total_amount"] \
+                    + tdf2019["yellow_total_amount"] - tdf2020["yellow_total_amount"]) \
+                            / (tdf2019["green_total_amount"]+tdf2019["yellow_total_amount"])}).replace([np.nan, np.inf, -np.inf], 0) \
+                                / (end - start + 1)
 
             yellow_percentiles = np.percentile(yellowratio["ratio"], [33, 66])
             green_percentiles = np.percentile(greenratio["ratio"], [33, 66])
@@ -485,6 +488,7 @@ def update_current_dataframe(value, isRatioView):
                                     biv_colors=biv_colors)
             tdf2020["yellow_change_percent"] = -yellowratio["ratio"] * 100
             tdf2020["green_change_percent"] = -greenratio["ratio"] * 100
+            tdf2020["total_change_percent"] = -totalratio["ratio"]*100
             tdf2020["biv_ratio_color"] = colors
             tdf = tdf2020
             tdf.drop(columns=["biv_amount_color"], inplace=True)
@@ -498,6 +502,7 @@ def update_current_dataframe(value, isRatioView):
                         "green_total_amount" : ":.2f",
                         "yellow_change_percent" : ":.2f",
                         "green_change_percent" : ":.2f",
+                        "total_change_percent": ":.2f",
                         "Borough" : True,
                         "service_zone" : True,
                         "biv_ratio_color" : False}
