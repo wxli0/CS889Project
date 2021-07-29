@@ -21,7 +21,6 @@ taxi_lookup = {int(feature["properties"]["location_id"]) : feature
                 for feature in taxigj["features"]}
 
 # taxi data
-taxidf = pd.read_csv(taxi_data_path + "taxi_data_2020-03.csv")[:nzones]
 taxidfMonths = []
 for monthID in range(1, 13):
     dfmonth = pd.read_csv(taxi_data_path + "taxi_data_2019-" + f"{monthID:02}" + ".csv")
@@ -38,7 +37,6 @@ zip_lookup = {int(feature["properties"]["postalCode"]) : feature
                 for feature in covidgj["features"]}
 
 # covid data
-coviddf = pd.read_csv(covid_data_path + "covid_data-2020-3.csv")[:nzips]
 coviddfMonths = []
 for monthID in range(1, 13):
     dfmonth = pd.read_csv(covid_data_path + "covid_data-2020-" + str(monthID) + ".csv")
