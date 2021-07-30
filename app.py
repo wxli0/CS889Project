@@ -172,39 +172,53 @@ app = dash.Dash(
 choroplethHeight = 1300
 
 # bivariate legend
-legendHeight = legendWidth = 500
-text_x = ['yellow revenue<P_33', 'P_33<=yellow revenue<=P_66', 'yellow_revenue>P_66']
-text_y = ['green revenue<P_33', 'P_33<=green revenue<=P_66', 'green revenue>P_66']
-legend_axis = dict(showline=False, zeroline=False, showgrid=False,  ticks='', showticklabels=False)
-taxilegend = go.Figure(
-                data=colorsquare(text_x, text_y, colors_to_colorscale(biv_colors)),
-                layout=dict(xaxis=dict(legend_axis, side="bottom"),
-                            yaxis=legend_axis,
-                            height=legendHeight, width=legendWidth))
-taxilegend.update_xaxes(
-        tickangle = 90,
-        title_text = "yellow taxi revenue",
-        title_font = {"size": 15},
-        title_standoff = 25,
-        showline=True, 
-        linewidth=2, 
-        linecolor='black', 
-        ticks="inside", 
-        ticktext=["33rd", "66th", "100th"],
-        tickvals=[0.5, 1.5, 2.5],
-        showticklabels=True)
-taxilegend.update_yaxes(
-        tickangle = 0,
-        title_text = "green taxi revenue",
-        title_font = {"size": 15},
-        title_standoff = 25,
-        showline=True, 
-        linewidth=2, 
-        linecolor='black', 
-        ticks="inside", 
-        ticktext=["0", "33rd", "66th", "100th"], 
-        tickvals=[-0.5, 0.5, 1.5, 2.5], 
-        showticklabels=True)
+@app.callback(
+    Output("taxi-legend", "figure")
+, [
+    Input("is-bivariate-view", "data"),
+])
+def update_taxilegend(isBivariateView):
+    taxilegend = go.Figure(layout=dict(
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)'))
+    taxilegend.update_xaxes(visible=False)
+    taxilegend.update_yaxes(visible=False)
+    if isBivariateView:
+        taxilegend = None
+        legendHeight = legendWidth = 500
+        text_x = ['yellow revenue<P_33', 'P_33<=yellow revenue<=P_66', 'yellow_revenue>P_66']
+        text_y = ['green revenue<P_33', 'P_33<=green revenue<=P_66', 'green revenue>P_66']
+        legend_axis = dict(showline=False, zeroline=False, showgrid=False,  ticks='', showticklabels=False)
+        taxilegend = go.Figure(
+                        data=colorsquare(text_x, text_y, colors_to_colorscale(biv_colors)),
+                        layout=dict(xaxis=dict(legend_axis, side="bottom"),
+                                    yaxis=legend_axis,
+                                    height=legendHeight, width=legendWidth))
+        taxilegend.update_xaxes(
+                tickangle = 90,
+                title_text = "yellow taxi revenue",
+                title_font = {"size": 15},
+                title_standoff = 25,
+                showline=True, 
+                linewidth=2, 
+                linecolor='black', 
+                ticks="inside", 
+                ticktext=["33rd", "66th", "100th"],
+                tickvals=[0.5, 1.5, 2.5],
+                showticklabels=True)
+        taxilegend.update_yaxes(
+                tickangle = 0,
+                title_text = "green taxi revenue",
+                title_font = {"size": 15},
+                title_standoff = 25,
+                showline=True, 
+                linewidth=2, 
+                linecolor='black', 
+                ticks="inside", 
+                ticktext=["0", "33rd", "66th", "100th"], 
+                tickvals=[-0.5, 0.5, 1.5, 2.5], 
+                showticklabels=True)
+    return taxilegend
 
 dummy_df = pd.DataFrame({
     "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
@@ -224,16 +238,27 @@ def get_highlights(selections, geojson, lookup_dict):
 
     return highlights
 
-def get_taxifig(selectedLocs, tdf, hover_data, coloring):
+def get_taxifig(selectedLocs, tdf, hover_data, coloring, isBivariateView):
     # clear traces
-    taxifig = px.choropleth_mapbox(tdf, geojson=taxigj,
-                            locations="PULocationID", 
-                            color=coloring,
-                            color_continuous_scale="Viridis",
-                            hover_name="Zone",
-                            hover_data=hover_data,
-                            featureidkey="properties.location_id",
-                            center={"lat":40.7, "lon":-73.97}, zoom=10.62)
+    taxifig = None
+    if isBivariateView:
+        taxifig = px.choropleth_mapbox(tdf, geojson=taxigj,
+                                locations="PULocationID", 
+                                color=coloring,
+                                color_discrete_map=bivcmap,
+                                hover_name="Zone",
+                                hover_data=hover_data,
+                                featureidkey="properties.location_id",
+                                center={"lat":40.7, "lon":-73.97}, zoom=10.62)
+    else:
+        taxifig = px.choropleth_mapbox(tdf, geojson=taxigj,
+                               locations="PULocationID", 
+                                color=coloring,
+                                color_continuous_scale="Viridis",
+                                hover_name="Zone",
+                                hover_data=hover_data,
+                                featureidkey="properties.location_id",
+                                center={"lat":40.7, "lon":-73.97}, zoom=10.62)
 
     if (len(selectedLocs) > 0):
         highlights = get_highlights(selectedLocs, taxigj, taxi_lookup)
@@ -418,8 +443,11 @@ app.layout = html.Div([
         ], className="five columns"),
 
         html.Div([
-            dcc.Graph(id="taxi-legend",
-            figure=taxilegend)
+            html.Button('Univariate View', id='btn-bu-change-view', n_clicks=0),
+        ]),
+
+        html.Div([
+            dcc.Graph(id="taxi-legend")
         ], className="one column")
     ], className="row"),
 
@@ -447,8 +475,11 @@ app.layout = html.Div([
         ], className="five columns"),
     ], className="row", id="drilldown", style= {'display': 'block'}),
 
+
+
     dcc.Store("current-taxidf"),
     dcc.Store("current-coviddf"),
+    dcc.Store("is-bivariate-view"),
     dcc.Store("is-ratio-view"),
     dcc.Store("current-hover-formatting"),
     dcc.Store("current-coloring")
@@ -475,13 +506,27 @@ def update_slider_view(n_clicks):
         return "Ratio View", True, 2, 11, ratio_marks, [2, 2]
 
 @app.callback([
+    Output("btn-bu-change-view", "children"),
+    Output("is-bivariate-view", "data"),
+], [
+    Input("btn-bu-change-view", "n_clicks"),
+])
+def update_bivariate_view(n_clicks):
+    if (n_clicks % 2):
+        return "Univariate View", True
+    else:
+        return "Bivariate View", False
+
+
+@app.callback([
     Output("current-coviddf", "data"),
     Output("current-taxidf", "data"),
     Output("current-hover-formatting", "data"),
     Output("current-coloring", "data")],
     [Input("month-slider", "value"),
-    Input("is-ratio-view", "data")])
-def update_current_dataframe(value, isRatioView):
+    Input("is-ratio-view", "data"),
+    Input("is-bivariate-view", "data")])
+def update_current_dataframe(value, isRatioView, isBivariateView):
     start, end = value
 
     if isRatioView:
@@ -507,8 +552,8 @@ def update_current_dataframe(value, isRatioView):
                             / tdf2019["green_total_amount"]}).replace([np.nan, np.inf, -np.inf], 0) \
                                 / (end - start + 1)
             totalratio = pd.DataFrame({"ratio":\
-                (tdf2019["green_total_amount"] - tdf2020["green_total_amount"] \
-                    + tdf2019["yellow_total_amount"] - tdf2020["yellow_total_amount"]) \
+              (tdf2019["green_total_amount"] - tdf2020["green_total_amount"] \
+                   + tdf2019["yellow_total_amount"] - tdf2020["yellow_total_amount"]) \
                             / (tdf2019["green_total_amount"]+tdf2019["yellow_total_amount"])}).replace([np.nan, np.inf, -np.inf], 0) \
                                 / (end - start + 1)
 
@@ -544,8 +589,9 @@ def update_current_dataframe(value, isRatioView):
                         "Borough" : True,
                         "service_zone" : True,
                         "biv_ratio_color" : False}
-        # coloring = "biv_ratio_color"
-        coloring = "total_change_percent"
+        coloring = "biv_ratio_color"
+        if not isBivariateView:
+            coloring = "total_change_percent"
 
     else:
         if start == end:
@@ -620,8 +666,9 @@ def update_current_dataframe(value, isRatioView):
     Input("current-coviddf", "data"),
     Input("current-taxidf", "data"),
     Input("current-hover-formatting", "data"),
-    Input("current-coloring", "data"),])
-def update_plots(covidClickData, taxiClickData, cdf, tdf, hover_data, coloring):
+    Input("current-coloring", "data"),
+    Input("is-bivariate-view", "data")])
+def update_plots(covidClickData, taxiClickData, cdf, tdf, hover_data, coloring, isBivariateView):
     ctx = dash.callback_context
     #ctx_msg = json.dumps({
     #    'states': ctx.states,
@@ -653,7 +700,7 @@ def update_plots(covidClickData, taxiClickData, cdf, tdf, hover_data, coloring):
         selectedZips = list(overlapdf[overlapdf["LocationID"] == taxiLocation]["zip_code"])
 
     return get_covidfig(selectedZips, coviddata), \
-            get_taxifig(selectedLocs, taxidata, hover_data, coloring)
+            get_taxifig(selectedLocs, taxidata, hover_data, coloring, isBivariateView)
 
 
 @app.callback([
