@@ -443,7 +443,7 @@ app.layout = html.Div([
         ], className="five columns"),
 
         html.Div([
-            html.Button('Univariate View', id='btn-bu-change-view', n_clicks=0),
+            html.Button('Bivariate View', id='btn-bu-change-view', n_clicks=0),
         ]),
 
         html.Div([
@@ -518,6 +518,7 @@ def update_bivariate_view(n_clicks):
         return "Bivariate View", False
 
 
+
 @app.callback([
     Output("current-coviddf", "data"),
     Output("current-taxidf", "data"),
@@ -574,6 +575,8 @@ def update_current_dataframe(value, isRatioView, isBivariateView):
             tdf['total_amount'] =  tdf["yellow_total_amount"]+tdf["green_total_amount"]
             tdf["log_total_amount"] = \
                 np.array(list(map(myLog, tdf["total_amount"])))
+            tdf["log_total_change_percent"] = \
+                np.array(list(map(myLog, tdf["total_change_percent"])))
 
             cdf = coviddfMonths[end].copy()
             for i in range(start, end):
@@ -585,13 +588,13 @@ def update_current_dataframe(value, isRatioView, isBivariateView):
                         "log_total_amount": ":.2f",
                         "yellow_change_percent" : ":.2f",
                         "green_change_percent" : ":.2f",
-                        "total_change_percent": ":.2f",
+                        "log_total_change_percent": ":.2f",
                         "Borough" : True,
                         "service_zone" : True,
                         "biv_ratio_color" : False}
         coloring = "biv_ratio_color"
         if not isBivariateView:
-            coloring = "total_change_percent"
+            coloring = "log_total_change_percent"
 
     else:
         if start == end:
