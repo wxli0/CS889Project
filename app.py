@@ -317,15 +317,42 @@ def compute_dates(start, end, isRatio):
         return dates
 
 
+def compute_dates_covid(start, end, isRatio):
+    # when not in Ratio view, the slider being completely out of the March-December 2020 range causes the whole range to be shown.
+    # otherwise only the part of the range that's part of the slider will be shown (i.e. March-X 2020)
+    if not isRatio:
+        if end <= 14:
+            start = 0
+            end = 11
+        else:
+            if start < 14:
+                start = 2
+            else:
+                start = max(2, start%12)
+            end %= 12
+    elif start < 2:
+        start = 2
+    dates = []
+    startDate = datetime.datetime(2020, 1, 1)+relativedelta(months=+start)
+    endDate = datetime.datetime(2020, 1, 1) + relativedelta(months=+end)
+    while startDate <= endDate:
+        dates.append(startDate)
+        startDate = startDate + relativedelta(months=+1)
+    return dates
+
+
 def get_covid_drilldown(selectedZips, start, end, isRatio):
     if (len(selectedZips) == 0):
         return dash.no_update
-    dates = compute_dates(start, end, isRatio)
-    df = pd.read_csv(covid_data_path + "processed_data.csv", parse_dates=["date"])
-    time_mask = df['date'].isin(dates)
-    location_mask = df["zip_code"].isin(selectedZips) 
-    mask = time_mask & location_mask
-    covid_drilldown = px.line(df[mask], x='date', y='hospitalization_rate', line_group = 'zip_code', color='zip_code', hover_name="zip_code")
+    covid_data = []
+    dates = compute_dates_covid(start, end, isRatio)
+    for date in dates:
+        df = pd.read_csv(covid_data_path + "covid_data-2020-"+str(date.month)+".csv")
+        df.insert(0, "date", date)
+        covid_data.append(df)
+    all_data = pd.concat(covid_data)
+    location_mask = all_data["zip_code"].isin(selectedZips)
+    covid_drilldown = px.line(all_data[location_mask], x='date', y='hospitalization_rate', line_group = 'zip_code', color='zip_code', hover_name="zip_code")
     return covid_drilldown
         
 
@@ -624,10 +651,10 @@ def update_drilldowns(covidClickData, taxiClickData, value, isRatio):
     start, end = value
     if start == end and isRatio:
         start = 0
-        end = 12
+        end = 11
     if start == end and not isRatio:
         start = 0
-        end = 24
+        end = 23
 
     # vars to be filled in
     covidLocation = None
