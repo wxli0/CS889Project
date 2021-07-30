@@ -652,8 +652,9 @@ def update_current_dataframe(value, isRatioView, isBivariateView):
                         "Borough" : True,
                         "service_zone" : True,
                         "biv_amount_color" : False}
-        # coloring = "biv_amount_color"
-        coloring = "log_total_amount"
+        coloring = "biv_amount_color"
+        if not isBivariateView:
+            coloring = "log_total_amount"
 
     return cdf.to_json(), tdf.to_json(), hover_data, coloring
 
