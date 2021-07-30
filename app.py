@@ -227,8 +227,9 @@ def get_highlights(selections, geojson, lookup_dict):
 def get_taxifig(selectedLocs, tdf, hover_data, coloring):
     # clear traces
     taxifig = px.choropleth_mapbox(tdf, geojson=taxigj,
-                            locations="PULocationID", color=coloring,
-                            color_discrete_map=bivcmap,
+                            locations="PULocationID", 
+                            color=coloring,
+                            color_continuous_scale="Viridis",
                             hover_name="Zone",
                             hover_data=hover_data,
                             featureidkey="properties.location_id",
@@ -505,6 +506,11 @@ def update_current_dataframe(value, isRatioView):
                 (tdf2019["green_total_amount"] - tdf2020["green_total_amount"]) \
                             / tdf2019["green_total_amount"]}).replace([np.nan, np.inf, -np.inf], 0) \
                                 / (end - start + 1)
+            totalratio = pd.DataFrame({"ratio":\
+                (tdf2019["green_total_amount"] - tdf2020["green_total_amount"] \
+                    + tdf2019["yellow_total_amount"] - tdf2020["yellow_total_amount"]) \
+                            / (tdf2019["green_total_amount"]+tdf2019["yellow_total_amount"])}).replace([np.nan, np.inf, -np.inf], 0) \
+                                / (end - start + 1)
 
             yellow_percentiles = np.percentile(yellowratio["ratio"], [33, 66])
             green_percentiles = np.percentile(greenratio["ratio"], [33, 66])
@@ -515,9 +521,14 @@ def update_current_dataframe(value, isRatioView):
                                     biv_colors=biv_colors)
             tdf2020["yellow_change_percent"] = -yellowratio["ratio"] * 100
             tdf2020["green_change_percent"] = -greenratio["ratio"] * 100
+            tdf2020["total_change_percent"] = -totalratio["ratio"]*100
             tdf2020["biv_ratio_color"] = colors
+            
             tdf = tdf2020
             tdf.drop(columns=["biv_amount_color"], inplace=True)
+            tdf['total_amount'] =  tdf["yellow_total_amount"]+tdf["green_total_amount"]
+            tdf["log_total_amount"] = \
+                np.array(list(map(myLog, tdf["total_amount"])))
 
             cdf = coviddfMonths[end].copy()
             for i in range(start, end):
@@ -526,12 +537,15 @@ def update_current_dataframe(value, isRatioView):
 
         hover_data = {"yellow_total_amount": ":.2f",
                         "green_total_amount" : ":.2f",
+                        "log_total_amount": ":.2f",
                         "yellow_change_percent" : ":.2f",
                         "green_change_percent" : ":.2f",
+                        "total_change_percent": ":.2f",
                         "Borough" : True,
                         "service_zone" : True,
                         "biv_ratio_color" : False}
-        coloring = "biv_ratio_color"
+        # coloring = "biv_ratio_color"
+        coloring = "total_change_percent"
 
     else:
         if start == end:
@@ -565,10 +579,14 @@ def update_current_dataframe(value, isRatioView):
                                 biv_colors=biv_colors)
             tdf["biv_amount_color"] = colors
             tdf.drop(columns=["yellow_log_total_amount", "green_log_total_amount"], inplace=True)
+            tdf['total_amount'] =  tdf["yellow_total_amount"]+tdf["green_total_amount"]
+            tdf["log_total_amount"] = \
+                np.array(list(map(myLog, tdf["total_amount"])))
             if (end >= 12):
                 # 2020
                 tdf.drop(columns=["yellow_change_percent", \
                                     "green_change_percent", \
+                                    "total_change_percent", \
                                     "biv_ratio_color"], inplace=True)
 
                 cdf = coviddfMonths[end - 12].copy()
@@ -584,10 +602,12 @@ def update_current_dataframe(value, isRatioView):
 
         hover_data = {"yellow_total_amount": ":.2f",
                         "green_total_amount" : ":.2f",
+                        "log_total_amount" : ":.2f",
                         "Borough" : True,
                         "service_zone" : True,
                         "biv_amount_color" : False}
-        coloring = "biv_amount_color"
+        # coloring = "biv_amount_color"
+        coloring = "log_total_amount"
 
     return cdf.to_json(), tdf.to_json(), hover_data, coloring
 
