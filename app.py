@@ -1,4 +1,5 @@
 import dash
+import math
 import numpy as np
 import pandas as pd
 import json
@@ -129,6 +130,15 @@ def colorsquare(text_x, text_y, colorscale, n=3):
 
 def myLog(x):
     return np.log(x) if (x > 0) else 0
+
+def sigmoid(x):
+    return 1 / (1 + math.exp(-x))
+
+def newLog(x):
+    if x<= 0:
+        return x
+    return np.log(x+1)
+    # return np.sign(x)*np.log(abs(x)+1)
 
 def set_interval_value(x, a, b):
     # function that associate to a float x, 
@@ -501,9 +511,10 @@ taxiTriggerStr = "taxi-choropleth.clickData"
 ])
 def update_slider_view(n_clicks):
     if (n_clicks % 2):
-        return "Raw Revenue View", False, 0, 23, rawrevenue_marks, [12, 12]
+        return "Raw Revenue View", True, 2, 11, ratio_marks, [2, 2]
+        return "Ratio View", False, 
     else:
-        return "Ratio View", True, 2, 11, ratio_marks, [2, 2]
+        return "Ratio View", False, 0, 23, rawrevenue_marks, [12, 12]
 
 @app.callback([
     Output("btn-bu-change-view", "children"),
@@ -528,10 +539,14 @@ def update_bivariate_view(n_clicks):
     Input("is-ratio-view", "data"),
     Input("is-bivariate-view", "data")])
 def update_current_dataframe(value, isRatioView, isBivariateView):
+    print("isRatioView is:", isRatioView)
+    print("isBivariateView is:", isBivariateView)
     start, end = value
 
     if isRatioView:
         if start == end:
+            print(len(taxidfMonths))
+            print(end)
             tdf = taxidfMonths[12 + end].copy()
             tdf.drop(columns=["biv_amount_color"], inplace=True)
 
@@ -577,6 +592,10 @@ def update_current_dataframe(value, isRatioView, isBivariateView):
                 np.array(list(map(myLog, tdf["total_amount"])))
             tdf["log_total_change_percent"] = \
                 np.array(list(map(myLog, tdf["total_change_percent"])))
+            tdf["sigmoid_total_change_percent"] = \
+                np.array(list(map(sigmoid, tdf["total_change_percent"])))
+            tdf["newlog_total_change_percent"] = \
+                np.array(list(map(newLog, tdf["total_change_percent"])))
 
             cdf = coviddfMonths[end].copy()
             for i in range(start, end):
@@ -588,13 +607,15 @@ def update_current_dataframe(value, isRatioView, isBivariateView):
                         "log_total_amount": ":.2f",
                         "yellow_change_percent" : ":.2f",
                         "green_change_percent" : ":.2f",
-                        "log_total_change_percent": ":.2f",
+                        "total_change_percent": ":.2f",
+                        "sigmoid_total_change_percent": ":.2f",
+                        "newlog_total_change_percent": ":.2f",
                         "Borough" : True,
                         "service_zone" : True,
                         "biv_ratio_color" : False}
         coloring = "biv_ratio_color"
         if not isBivariateView:
-            coloring = "log_total_change_percent"
+            coloring = "newlog_total_change_percent"
 
     else:
         if start == end:
@@ -649,6 +670,7 @@ def update_current_dataframe(value, isRatioView, isBivariateView):
                     cdf["hospitalization_rate"] += coviddfMonths[i - 12]["hospitalization_rate"]
             cdf["hospitalization_rate"] /= (end - start + 1)
 
+        print(tdf)
         hover_data = {"yellow_total_amount": ":.2f",
                         "green_total_amount" : ":.2f",
                         "log_total_amount" : ":.2f",
