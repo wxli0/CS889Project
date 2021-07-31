@@ -5,7 +5,7 @@ import json
 import geojson
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import plotly.express as px
 import plotly.graph_objs as go
 
@@ -279,7 +279,8 @@ def get_taxifig(selectedLocs, tdf, hover_data, coloring, isBivariateView):
         mapbox_style="carto-positron",
         margin={"r":0,"t":0,"l":0,"b":0},
         height=choroplethHeight,
-        showlegend=False)
+        showlegend=False,
+        modebar_remove=["pan", "select2d", "lasso2d"])
 
     return taxifig
             
@@ -315,7 +316,8 @@ def get_covidfig(selectedZips, cdf):
     covidfig.update_layout(
         mapbox_style="carto-positron",
         margin={"r":0,"t":0,"l":0,"b":0},
-        height=choroplethHeight)
+        height=choroplethHeight,
+        modebar_remove=["pan", "select2d", "lasso2d"])
 
     return covidfig
 
@@ -475,7 +477,7 @@ app.layout = html.Div([
         ], className="five columns"),
     ], className="row", id="drilldown", style= {'display': 'block'}),
 
-
+    html.Div(id="hidden-div", style={"display":"none"}),
 
     dcc.Store("current-taxidf"),
     dcc.Store("current-coviddf"),
@@ -488,6 +490,8 @@ app.layout = html.Div([
 # interactions
 covidTriggerStr = "covid-choropleth.clickData"
 taxiTriggerStr = "taxi-choropleth.clickData"
+covidRelayoutStr = "covid-choropleth.relayoutData"
+taxiRelayoutStr = "taxi-choropleth.relayoutData"
 
 @app.callback([
     Output("btn-change-view", "children"),
@@ -671,8 +675,14 @@ def update_current_dataframe(value, isRatioView, isBivariateView):
     Input("current-taxidf", "data"),
     Input("current-hover-formatting", "data"),
     Input("current-coloring", "data"),
-    Input("is-bivariate-view", "data")])
-def update_plots(covidClickData, taxiClickData, cdf, tdf, hover_data, coloring, isBivariateView):
+    Input("is-bivariate-view", "data"),
+    Input('covid-choropleth', 'relayoutData'),
+    Input('taxi-choropleth', 'relayoutData')
+], [
+    State('covid-choropleth', 'figure'),
+    State('taxi-choropleth', 'figure')
+])
+def update_plots(covidClickData, taxiClickData, cdf, tdf, hover_data, coloring, isBivariateView, covidRelayout, taxiRelayout, covidFig, taxiFig):
     ctx = dash.callback_context
     #ctx_msg = json.dumps({
     #    'states': ctx.states,
@@ -695,6 +705,16 @@ def update_plots(covidClickData, taxiClickData, cdf, tdf, hover_data, coloring, 
     elif ctx.triggered[0]["prop_id"] == taxiTriggerStr:
         if taxiClickData is not None:
             taxiLocation = taxiClickData["points"][0]["location"]
+    elif ctx.triggered[0]["prop_id"] == covidRelayoutStr:
+        if covidRelayout is not None and "mapbox.center" in covidRelayout:
+            taxiFig["layout"]["mapbox"]["center"] = covidRelayout["mapbox.center"]
+            taxiFig["layout"]["mapbox"]["zoom"] = covidRelayout["mapbox.zoom"]
+        return covidFig, taxiFig
+    elif ctx.triggered[0]["prop_id"] == taxiRelayoutStr:
+        if taxiRelayout is not None and "mapbox.center" in taxiRelayout:
+            covidFig["layout"]["mapbox"]["center"] = taxiRelayout["mapbox.center"]
+            covidFig["layout"]["mapbox"]["zoom"] = taxiRelayout["mapbox.zoom"]
+        return covidFig, taxiFig
 
     if covidLocation:
         selectedZips = [covidLocation]
