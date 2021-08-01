@@ -398,6 +398,18 @@ def get_covid_drilldown(selectedZips, start, end, isRatio):
     all_data = pd.concat(covid_data)
     location_mask = all_data["zip_code"].isin(selectedZips)
     covid_drilldown = px.line(all_data[location_mask], x='date', y='hospitalization_rate', line_group = 'zip_code', color='zip_code', hover_name="zip_code")
+    events_data = pd.read_csv(covid_data_path + "nyc_events.csv", parse_dates=['date'])
+    min_date = min(dates)
+    max_date = max(dates)
+    
+    for idx, row in events_data.iterrows():
+        if row['type'] == "lockdown" or row['type'] == "opening":
+            if row["date"] > min_date and row["date"] < max_date:
+                if row['type'] == "lockdown":
+                    event_color = "red"
+                else:
+                    event_color = "green"
+                covid_drilldown.add_vline(x = row["date"], line_color = event_color)
     return covid_drilldown
         
 
@@ -538,8 +550,6 @@ def update_bivariate_view(n_clicks):
         return "Univariate View", True
     else:
         return "Bivariate View", False
-
-
 
 @app.callback([
     Output("current-coviddf", "data"),
