@@ -1,0 +1,36 @@
+date,description,type
+"March 7, 2020",State of emergency declared. ,lockdown
+"March 9, 2020",State began producing its own brand of hand sanitizer. ,misc
+"March 10, 2020","Governor Cuomo orders a coronavirus ""containme New Rochelle, Westchester County, NY",misc
+"March 12, 2020",All gatherings of less than 500 people ordered to cut capacity by 50%. All gatherings of more than 500 people ordered to cancel. ,lockdown
+"March 12, 2020","All SUNY campuses ordered to close within a week, and then shift to online for the remainder of the semester. ",misc
+"March 15, 2020",All New York City schools ordered to close until April 20. ,lockdown
+"March 16, 2020",Cuomo coordinates with his counterparts in New Jersey and Connecticut to formulate uniform policies for shutdowns.,misc
+"March 20, 2020",State-wide stay-at-home order declared. All non-essential businesses ordered to close. All non-essential gatherings canceled/postponed.,lockdown
+"March 25, 2020",Advisory issued ordering nursing homes to admit patients who test positive for the coronavirus and to not allow testing of prospective nursing home patients. This order was revoked on May 10. ,misc
+"March 27, 2020",All schools statewide ordered to remain closed until April 15. ,misc
+"March 28, 2020",All non-essential construction sites ordered to shut down. ,misc
+"April 6, 2020",Statewide stay-at-home order and school closures extended to April 29. ,lockdown
+"April 9, 2020",List of businesses deemed essential expanded. ,opening
+"April 15, 2020",All state residents ordered to wear face masks/coverings in public places where social distancing is not possible. ,misc
+"April 16, 2020",Statewide stay-at-home order and school closures extended to May 15. ,lockdown
+"May 1, 2020",All schools and universities ordered to remain closed for the remainder of the academic year. ,misc
+"May 7, 2020",Statewide four-phase reopening plan is first announced. ,misc
+"May 14, 2020",Statewide state of emergency extended to June 13. ,lockdown
+"May 15, 2020",Phase 1 of reopening allowed for counties that met qualifications. Five counties met qualifications and began reopening on this date. ,opening
+"May 15, 2020","Drive-in theaters, landscaping/gardening businesses allowed to reopen state-wide (regardless of Phase 1 qualifications). ",opening
+"May 23, 2020",Gatherings of up to ten people allowed as long as social distancing is practiced. ,opening
+"June 8, 2020","New York City meets conditions for Phase 1, allowing the reopening of construction, manufacturing, agriculture, forestry, fishing, and select retail businesses that can offer curbside pickup. ",opening
+"June 15, 2020","Four-phase reopening plan is modified to allow non-essential gatherings of 25 people upon entry of Phase 3, and 50 people upon entry of Phase 4. ",misc
+"June 22, 2020","New York City meets conditions for Phase 2, allowing the reopening of outdoor dining at restaurants, hair salons and barber shops, offices, real estate firms, in-store retail, vehicle sales, retail rental, repair services, cleaning services, and commercial building management businesses. ",opening
+"July 10, 2020","Malls allowed to open at 25% capacity for regions in Phase 4, with all patrons required to wear masks. ",opening
+"July 16, 2020",New restrictions on bars/restaurants only allowing alcohol to be served only to people ordering food. ,misc
+"August 7, 2020",Schools allowed to open in-person in the fall if certain conditions are met. ,misc
+"August 19, 2020",Ban on ticketed music events at bars and restaurants. ,misc
+"October 1, 2020",Exposure notification apps are added to notify users of potential exposure. ,misc
+"October 1, 2020",The previous ban on ticketed events at bars and restaurants is ruled unconstitutional. ,misc
+"October 6, 2020","Micro-cluster strategy is introduced, with the first micro-clusters being parts of Brooklyn and Queens. ",misc
+"November 12, 2020","Bars, gyms, and any other business with a liquor license must close by 10 p.m. (restaurants as well, except for curbside pickup). Household gatherings limited to ten people. ",lockdown
+"November 25, 2020",Previous restrictions on capacity through the micro-cluster strategy for places of worship is ruled unconstitutional. ,misc
+"December 8, 2020",Hospital bed capacity statewide is demanded to be upgraded by 25 percent. ,misc
+"June 24, 2021",State of Emergency expires ,opening
