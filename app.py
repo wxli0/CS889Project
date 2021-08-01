@@ -7,8 +7,10 @@ import geojson
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
+import platform
 import plotly.express as px
 import plotly.graph_objs as go
+from screeninfo import get_monitors
 
 import datetime
 from dateutil.relativedelta import *
@@ -178,8 +180,10 @@ app = dash.Dash(
     ]
 )
 
-# figures
-choroplethHeight = 1300
+# figures, set chorepleth height
+choroplethHeight = 4/5*get_monitors()[0].height
+if platform.system() == 'Darwin':
+    choroplethHeight *= 2
 
 # bivariate legend
 @app.callback(
@@ -195,7 +199,10 @@ def update_taxilegend(isBivariateView):
     taxilegend.update_yaxes(visible=False)
     if isBivariateView:
         taxilegend = None
-        legendHeight = legendWidth = 500
+        legendHeight = legendWidth = 3/10*get_monitors()[0].height
+        if platform.system() == 'Darwin':
+            legendHeight *= 2
+            legendWidth *= 2
         text_x = ['yellow revenue<P_33', 'P_33<=yellow revenue<=P_66', 'yellow_revenue>P_66']
         text_y = ['green revenue<P_33', 'P_33<=green revenue<=P_66', 'green revenue>P_66']
         legend_axis = dict(showline=False, zeroline=False, showgrid=False,  ticks='', showticklabels=False)
@@ -674,7 +681,6 @@ def update_current_dataframe(value, isRatioView, isBivariateView):
                     cdf["hospitalization_rate"] += coviddfMonths[i - 12]["hospitalization_rate"]
             cdf["hospitalization_rate"] /= (end - start + 1)
 
-        print(tdf)
         hover_data = {"yellow_total_amount": ":.2f",
                         "green_total_amount" : ":.2f",
                         "log_total_amount" : ":.2f",
