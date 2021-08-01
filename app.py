@@ -181,7 +181,7 @@ app = dash.Dash(
 )
 
 # figures, set chorepleth height
-choroplethHeight = 4/5*get_monitors()[0].height
+choroplethHeight = 0.6*get_monitors()[0].height
 if platform.system() == 'Darwin':
     choroplethHeight *= 2
 
@@ -550,8 +550,8 @@ def update_bivariate_view(n_clicks):
     Input("is-ratio-view", "data"),
     Input("is-bivariate-view", "data")])
 def update_current_dataframe(value, isRatioView, isBivariateView):
-    print("isRatioView is:", isRatioView)
-    print("isBivariateView is:", isBivariateView)
+    # print("isRatioView is:", isRatioView)
+    # print("isBivariateView is:", isBivariateView)
     start, end = value
 
     if isRatioView:
