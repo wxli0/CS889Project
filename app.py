@@ -182,6 +182,8 @@ app = dash.Dash(
 
 # figures, set chorepleth height
 choroplethHeight = 0.6*get_monitors()[0].height
+defaultCenter = {"lat":40.7, "lon":-73.97}
+defaultZoom = 10.62
 if platform.system() == 'Darwin':
     choroplethHeight *= 2
 
@@ -255,7 +257,7 @@ def get_highlights(selections, geojson, lookup_dict):
 
     return highlights
 
-def get_taxifig(selectedLocs, tdf, hover_data, coloring, isBivariateView):
+def get_taxifig(selectedLocs, tdf, hover_data, coloring, isBivariateView, newCenter, newZoom):
     # clear traces
     taxifig = None
     if isBivariateView:
@@ -266,7 +268,7 @@ def get_taxifig(selectedLocs, tdf, hover_data, coloring, isBivariateView):
                                 hover_name="Zone",
                                 hover_data=hover_data,
                                 featureidkey="properties.location_id",
-                                center={"lat":40.7, "lon":-73.97}, zoom=10.62)
+                                center=newCenter, zoom=newZoom)
     else:
         taxifig = px.choropleth_mapbox(tdf, geojson=taxigj,
                                locations="PULocationID", 
@@ -275,7 +277,7 @@ def get_taxifig(selectedLocs, tdf, hover_data, coloring, isBivariateView):
                                 hover_name="Zone",
                                 hover_data=hover_data,
                                 featureidkey="properties.location_id",
-                                center={"lat":40.7, "lon":-73.97}, zoom=10.62)
+                                center=newCenter, zoom=newZoom)
 
     if (len(selectedLocs) > 0):
         highlights = get_highlights(selectedLocs, taxigj, taxi_lookup)
@@ -286,7 +288,7 @@ def get_taxifig(selectedLocs, tdf, hover_data, coloring, isBivariateView):
                                         hover_name="Zone",
                                         hover_data=hover_data,
                                         featureidkey="properties.location_id",
-                                        center={"lat":40.7, "lon":-73.97})
+                                        center=newCenter)
         taxiHighlights.update_traces(marker_line=dict(color="red", width=5))
         for i in range(len(taxiHighlights.data)):
             taxifig.add_trace(taxiHighlights.data[i])
@@ -301,7 +303,7 @@ def get_taxifig(selectedLocs, tdf, hover_data, coloring, isBivariateView):
 
     return taxifig
             
-def get_covidfig(selectedZips, cdf):
+def get_covidfig(selectedZips, cdf, newCenter, newZoom):
     # clear traces
     covidfig = px.choropleth_mapbox(cdf, geojson=covidgj,
                             locations="zip_code", color="hospitalization_rate",
@@ -311,8 +313,8 @@ def get_covidfig(selectedZips, cdf):
                                 "hospitalization_rate" : ":.2f",
                                 "zip_code" : False},
                             featureidkey="properties.postalCode",
-                            center={"lat":40.7, "lon":-73.97},
-                            zoom=10.62)
+                            center=newCenter,
+                            zoom=newZoom)
 
     if (len(selectedZips) > 0):
         highlights = get_highlights(selectedZips, covidgj, zip_lookup)
@@ -325,7 +327,7 @@ def get_covidfig(selectedZips, cdf):
                                             "hospitalization_rate" : ":.2f",
                                             "zip_code" : False},
                                         featureidkey="properties.postalCode",
-                                        center={"lat":40.7, "lon":-73.97})
+                                        center=newCenter)
         covidHighlights.update_traces(marker_line=dict(color="red", width=5))
         covidfig.add_trace(covidHighlights.data[0])
 
@@ -505,8 +507,6 @@ app.layout = html.Div([
             dcc.Graph(id='taxi-drilldown'),
         ], className="five columns"),
     ], className="row", id="drilldown", style= {'display': 'block'}),
-
-    html.Div(id="hidden-div", style={"display":"none"}),
 
     dcc.Store("current-taxidf"),
     dcc.Store("current-coviddf"),
@@ -736,33 +736,40 @@ def update_plots(covidClickData, taxiClickData, cdf, tdf, hover_data, coloring, 
     selectedZips = []
     selectedLocs = []
 
-    # figure out which map triggered the callback
-    if ctx.triggered[0]["prop_id"] == covidTriggerStr:
-        if covidClickData is not None:
-            covidLocation = covidClickData["points"][0]["location"]
-    elif ctx.triggered[0]["prop_id"] == taxiTriggerStr:
-        if taxiClickData is not None:
-            taxiLocation = taxiClickData["points"][0]["location"]
-    elif ctx.triggered[0]["prop_id"] == covidRelayoutStr:
-        if covidRelayout is not None and "mapbox.center" in covidRelayout:
-            taxiFig["layout"]["mapbox"]["center"] = covidRelayout["mapbox.center"]
-            taxiFig["layout"]["mapbox"]["zoom"] = covidRelayout["mapbox.zoom"]
-            return covidFig, taxiFig
-    elif ctx.triggered[0]["prop_id"] == taxiRelayoutStr:
-        if taxiRelayout is not None and "mapbox.center" in taxiRelayout:
-            covidFig["layout"]["mapbox"]["center"] = taxiRelayout["mapbox.center"]
-            covidFig["layout"]["mapbox"]["zoom"] = taxiRelayout["mapbox.zoom"]
-            return covidFig, taxiFig
+    currCenter = defaultCenter
+    currZoom = defaultZoom
 
-    if covidLocation:
-        selectedZips = [covidLocation]
-        selectedLocs = list(overlapdf[overlapdf["zip_code"] == covidLocation]["LocationID"])
-    elif taxiLocation:
-        selectedLocs = [taxiLocation]
-        selectedZips = list(overlapdf[overlapdf["LocationID"] == taxiLocation]["zip_code"])
+    if (covidFig is not None):
+        # figure out which map triggered the callback
+        if ctx.triggered[0]["prop_id"] == covidTriggerStr:
+            if covidClickData is not None:
+                covidLocation = covidClickData["points"][0]["location"]
+        elif ctx.triggered[0]["prop_id"] == taxiTriggerStr:
+            if taxiClickData is not None:
+                taxiLocation = taxiClickData["points"][0]["location"]
+        elif ctx.triggered[0]["prop_id"] == covidRelayoutStr:
+            if covidRelayout is not None and "mapbox.center" in covidRelayout:
+                taxiFig["layout"]["mapbox"]["center"] = covidRelayout["mapbox.center"]
+                taxiFig["layout"]["mapbox"]["zoom"] = covidRelayout["mapbox.zoom"]
+                return covidFig, taxiFig
+        elif ctx.triggered[0]["prop_id"] == taxiRelayoutStr:
+            if taxiRelayout is not None and "mapbox.center" in taxiRelayout:
+                covidFig["layout"]["mapbox"]["center"] = taxiRelayout["mapbox.center"]
+                covidFig["layout"]["mapbox"]["zoom"] = taxiRelayout["mapbox.zoom"]
+                return covidFig, taxiFig
 
-    return get_covidfig(selectedZips, coviddata), \
-            get_taxifig(selectedLocs, taxidata, hover_data, coloring, isBivariateView)
+        if covidLocation:
+            selectedZips = [covidLocation]
+            selectedLocs = list(overlapdf[overlapdf["zip_code"] == covidLocation]["LocationID"])
+        elif taxiLocation:
+            selectedLocs = [taxiLocation]
+            selectedZips = list(overlapdf[overlapdf["LocationID"] == taxiLocation]["zip_code"])
+
+        currCenter = covidFig["layout"]["mapbox"]["center"]
+        currZoom = covidFig["layout"]["mapbox"]["zoom"]
+
+    return get_covidfig(selectedZips, coviddata, currCenter, currZoom), \
+            get_taxifig(selectedLocs, taxidata, hover_data, coloring, isBivariateView, currCenter, currZoom)
 
 
 @app.callback([
