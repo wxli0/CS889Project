@@ -731,12 +731,12 @@ def update_plots(covidClickData, taxiClickData, cdf, tdf, hover_data, coloring, 
         if covidRelayout is not None and "mapbox.center" in covidRelayout:
             taxiFig["layout"]["mapbox"]["center"] = covidRelayout["mapbox.center"]
             taxiFig["layout"]["mapbox"]["zoom"] = covidRelayout["mapbox.zoom"]
-        return covidFig, taxiFig
+            return covidFig, taxiFig
     elif ctx.triggered[0]["prop_id"] == taxiRelayoutStr:
         if taxiRelayout is not None and "mapbox.center" in taxiRelayout:
             covidFig["layout"]["mapbox"]["center"] = taxiRelayout["mapbox.center"]
             covidFig["layout"]["mapbox"]["zoom"] = taxiRelayout["mapbox.zoom"]
-        return covidFig, taxiFig
+            return covidFig, taxiFig
 
     if covidLocation:
         selectedZips = [covidLocation]
