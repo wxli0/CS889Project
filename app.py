@@ -185,7 +185,7 @@ choroplethHeight = 0.6*get_monitors()[0].height
 defaultCenter = {"lat":40.7, "lon":-73.97}
 defaultZoom = 10.62
 if platform.system() == 'Darwin':
-    choroplethHeight *= 2
+    choroplethHeight *= 3
 
 # bivariate legend
 @app.callback(
@@ -412,6 +412,8 @@ def get_covid_drilldown(selectedZips, start, end, isRatio):
                 else:
                     event_color = "green"
                 covid_drilldown.add_vline(x = row["date"], line_color = event_color)
+                covid_drilldown.add_annotation(x = row["date"], y=1.2, yref='paper', \
+                    showarrow=False, text=row["type"], textangle=-70,font_size=10)
     return covid_drilldown
         
 
