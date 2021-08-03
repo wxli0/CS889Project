@@ -305,9 +305,13 @@ def get_taxifig(selectedLocs, tdf, hover_data, coloring, isBivariateView, newCen
             
 def get_covidfig(selectedZips, cdf, newCenter, newZoom):
     # clear traces
+    opacity = 1
+    if list(set(cdf['hospitalization_rate'])) == [0]:
+        opacity = 0
     covidfig = px.choropleth_mapbox(cdf, geojson=covidgj,
                             locations="zip_code", color="hospitalization_rate",
                             color_continuous_scale="Viridis",
+                            opacity = opacity,
                             hover_name="zip_code",
                             hover_data={
                                 "hospitalization_rate" : ":.2f",
@@ -322,6 +326,7 @@ def get_covidfig(selectedZips, cdf, newCenter, newZoom):
                                         geojson=highlights,
                                         locations="zip_code", color="hospitalization_rate",
                                         color_continuous_scale="Viridis",
+                                        opacity = opacity,
                                         hover_name="zip_code",
                                         hover_data={
                                             "hospitalization_rate" : ":.2f",
