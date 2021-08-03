@@ -60,42 +60,42 @@ biv_colors = [  "#e8e8e8", "#b5c0da", "#6c83b5",
 bivcmap = {clr : clr for clr in biv_colors}
 
 # slider marks
-ratio_marks = { 0  : {"label": "Jan."},
-                1  : {"label": "Feb."},
-                2  : {"label": "2020 Mar.", "style":{"color": "#77b0b1"}},
-                3  : {"label": "Apr."},
-                4  : {"label": "May"},
-                5  : {"label": "Jun."},
-                6  : {"label": "Jul."},
-                7  : {"label": "Aug."},
-                8  : {"label": "Sep."},
-                9  : {"label": "Oct."},
-                10 : {"label": "Nov."},
-                11 : {"label": "Dec."},}
-rawrevenue_marks = {0  : {"label": "2019", "style":{"color": "#77b0b1"}},
-                    1  : {"label": "Feb."},
-                    2  : {"label": "Mar."},
-                    3  : {"label": "Apr."},
-                    4  : {"label": "May"},
-                    5  : {"label": "Jun."},
-                    6  : {"label": "Jul."},
-                    7  : {"label": "Aug."},
-                    8  : {"label": "Sep."},
-                    9  : {"label": "Oct."},
-                    10 : {"label": "Nov."},
-                    11 : {"label": "Dec."},
-                    12 : {"label": "2020", "style":{"color": "#77b0b1"}},
-                    13 : {"label": "Feb."},
-                    14 : {"label": "Mar."},
-                    15 : {"label": "Apr."},
-                    16 : {"label": "May"},
-                    17 : {"label": "Jun."},
-                    18 : {"label": "Jul."},
-                    19 : {"label": "Aug."},
-                    20 : {"label": "Sep."},
-                    21 : {"label": "Oct."},
-                    22 : {"label": "Nov."},
-                    23 : {"label": "Dec."},}
+ratio_marks = { 0  : {"label": "Jan.", 'style':{'font-size':'20px'}},
+                1  : {"label": "Feb.", 'style': {'font-size':'20px'}},
+                2  : {"label": "2020 Mar.", "style":{"color": "#77b0b1", "font-size":"20px"}},
+                3  : {"label": "Apr.", "style":{"font-size":"20px"}},
+                4  : {"label": "May","style":{"font-size":"20px"}},
+                5  : {"label": "Jun.", "style":{"font-size":"20px"}},
+                6  : {"label": "Jul.", "style":{"font-size":"20px"}},
+                7  : {"label": "Aug.", "style":{"font-size":"20px"}},
+                8  : {"label": "Sep.", "style":{"font-size":"20px"}},
+                9  : {"label": "Oct.", "style":{"font-size":"20px"}},
+                10 : {"label": "Nov.", "style":{"font-size":"20px"}},
+                11 : {"label": "Dec.", "style":{"font-size":"20px"}}}
+rawrevenue_marks = {0  : {"label": "2019", "style":{"color": "#77b0b1", "font-size":"20px"}},
+                    1  : {"label": "Feb.", "style":{"font-size":"20px"}},
+                    2  : {"label": "Mar.", "style":{"font-size":"20px"}},
+                    3  : {"label": "Apr.", "style":{"font-size":"20px"}},
+                    4  : {"label": "May", "style":{"font-size":"20px"}},
+                    5  : {"label": "Jun.", "style":{"font-size":"20px"}},
+                    6  : {"label": "Jul.", "style":{"font-size":"20px"}},
+                    7  : {"label": "Aug.", "style":{"font-size":"20px"}},
+                    8  : {"label": "Sep.", "style":{"font-size":"20px"}},
+                    9  : {"label": "Oct.", "style":{"font-size":"20px"}},
+                    10 : {"label": "Nov.", "style":{"font-size":"20px"}},
+                    11 : {"label": "Dec.", "style":{"font-size":"20px"}},
+                    12 : {"label": "2020", "style":{"color": "#77b0b1", "font-size":"20px"}},
+                    13 : {"label": "Feb.", "style":{"font-size":"20px"}},
+                    14 : {"label": "Mar.", "style":{"font-size":"20px"}},
+                    15 : {"label": "Apr.", "style":{"font-size":"20px"}},
+                    16 : {"label": "May", "style":{"font-size":"20px"}},
+                    17 : {"label": "Jun.", "style":{"font-size":"20px"}},
+                    18 : {"label": "Jul.", "style":{"font-size":"20px"}},
+                    19 : {"label": "Aug.", "style":{"font-size":"20px"}},
+                    20 : {"label": "Sep.", "style":{"font-size":"20px"}},
+                    21 : {"label": "Oct.", "style":{"font-size":"20px"}},
+                    22 : {"label": "Nov.", "style":{"font-size":"20px"}},
+                    23 : {"label": "Dec.", "style":{"font-size":"20px"}}}
 
 # helper funcs. about data
 def colors_to_colorscale(biv_colors):
@@ -541,7 +541,6 @@ taxiRelayoutStr = "taxi-choropleth.relayoutData"
 def update_slider_view(n_clicks):
     if (n_clicks % 2):
         return "Raw Revenue View", True, 2, 11, ratio_marks, [2, 2]
-        return "Ratio View", False, 
     else:
         return "Ratio View", False, 0, 23, rawrevenue_marks, [12, 12]
 
