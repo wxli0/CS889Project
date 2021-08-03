@@ -368,17 +368,15 @@ def compute_dates_covid(start, end, isRatio):
     # when not in Ratio view, the slider being completely out of the March-December 2020 range causes the whole range to be shown.
     # otherwise only the part of the range that's part of the slider will be shown (i.e. March-X 2020)
     if not isRatio:
-        if end <= 14:
+        if end <= 12:
             start = 0
             end = 11
         else:
-            if start < 14:
-                start = 2
+            if start < 12:
+                start = 0
             else:
-                start = max(2, start%12)
+                start = max(0, start%12)
             end %= 12
-    elif start < 2:
-        start = 2
     dates = []
     startDate = datetime.datetime(2020, 1, 1)+relativedelta(months=+start)
     endDate = datetime.datetime(2020, 1, 1) + relativedelta(months=+end)
@@ -393,13 +391,14 @@ def get_covid_drilldown(selectedZips, start, end, isRatio):
         return dash.no_update
     covid_data = []
     dates = compute_dates_covid(start, end, isRatio)
+    all_dates = compute_dates(start, end, isRatio)
     for date in dates:
         df = pd.read_csv(covid_data_path + "covid_data-2020-"+str(date.month)+".csv")
         df.insert(0, "date", date)
         covid_data.append(df)
     all_data = pd.concat(covid_data)
     location_mask = all_data["zip_code"].isin(selectedZips)
-    covid_drilldown = px.line(all_data[location_mask], x='date', y='hospitalization_rate', line_group = 'zip_code', color='zip_code', hover_name="zip_code")
+    covid_drilldown = px.line(all_data[location_mask], x='date', y='hospitalization_rate', line_group = 'zip_code', color='zip_code', hover_name="zip_code", range_x=[min(all_dates), max(all_dates)])
     events_data = pd.read_csv(covid_data_path + "nyc_events.csv", parse_dates=['date'])
     min_date = min(dates)
     max_date = max(dates)
