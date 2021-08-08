@@ -310,7 +310,7 @@ def get_covidfig(selectedZips, cdf, newCenter, newZoom):
         opacity = 0
     covidfig = px.choropleth_mapbox(cdf, geojson=covidgj,
                             locations="zip_code", color="hospitalization_rate",
-                            color_continuous_scale="Viridis",
+                            color_continuous_scale="thermal",
                             opacity = opacity,
                             hover_name="zip_code",
                             hover_data={
@@ -325,7 +325,7 @@ def get_covidfig(selectedZips, cdf, newCenter, newZoom):
         covidHighlights = px.choropleth_mapbox(cdf.loc[cdf["zip_code"].isin(selectedZips)],
                                         geojson=highlights,
                                         locations="zip_code", color="hospitalization_rate",
-                                        color_continuous_scale="Viridis",
+                                        color_continuous_scale="thermal",
                                         opacity = opacity,
                                         hover_name="zip_code",
                                         hover_data={
