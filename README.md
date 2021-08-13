@@ -1,4 +1,13 @@
-CS 889 Project
+# CS889 project
 
-Files:
-1. Taxi Zone-Zip Code overlap.ipynb: Creates a csv file that represents an list of Edges for the graph of overlapping Taxi zones and zip codes.  Rows in the csv have a zip code and a taxi code that overlap.
+A dashboard to examine the impact of COVID-19 on the NYC Taxi Industry
+
+## Commands to run
+
+Plotly 5.1.0 is required.
+
+```bash
+git clone git@github.com:wxli0/CS889Project.git
+cd CS889Project
+python app.py
+```
